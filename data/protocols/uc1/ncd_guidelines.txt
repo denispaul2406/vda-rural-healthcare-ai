@@ -1,0 +1,192 @@
+[PROTOCOL: HYPERTENSION_MEDICATION_SCHEDULE]
+[Source: ICMR Guidelines for Type 2 Diabetes & Hypertension (2018), Sec 4.1]
+Hypertension (high blood pressure) requires lifelong daily medication management.
+Patients must take their prescribed anti-hypertensive medication every day at the same time, usually in the morning after breakfast or as specified by the medical officer.
+Do not skip medication even if you feel completely healthy. High blood pressure often has no noticeable symptoms.
+If a dose is missed by less than 4 hours, take it as soon as remembered. If more than 4 hours have passed or it is close to the next dose, skip the missed dose and resume normal schedule. Never take a double dose to make up for a missed one.
+
+[PROTOCOL: DIABETES_MEDICATION_SCHEDULE]
+[Source: ICMR Guidelines for Type 2 Diabetes Mellitus (2018), Sec 5.2]
+Type 2 Diabetes Mellitus requires regular medication (oral anti-diabetic drugs or insulin) as prescribed by the doctor.
+Take oral diabetes medicine with or immediately before meals to prevent low blood sugar (hypoglycemia).
+Always keep a small source of sugar (such as glucose powder, jaggery, or sugar candy) with you in case of sudden dizziness, sweating, or shakiness caused by low blood sugar.
+Never stop or change diabetes medication without consulting your doctor or Primary Health Centre (PHC) staff.
+
+[PROTOCOL: FOLLOW_UP_VISIT_SCHEDULE]
+[Source: WHO HEARTS Technical Package & MoHFW NPCDCS Guidelines]
+Hypertension and Diabetes patients must visit their nearest Health and Wellness Centre (HWC) or Sub-Centre / PHC for routine check-ups.
+- Blood Pressure Monitoring: Every 30 days or as advised by your Auxiliary Nurse Midwife (ANM) / ASHA worker.
+- Blood Sugar Monitoring: Every 30 to 60 days.
+- Medical Officer Consultation: Every 3 months for clinical review and prescription refill.
+- 3-Day Follow-Up Alert: If you missed your scheduled monthly follow-up appointment by 3 days, visit your nearest Sub-Centre or contact your local ASHA worker immediately to avoid running out of prescribed medicine.
+
+[PROTOCOL: ANNUAL_NCD_SCREENING]
+[Source: MoHFW NPCDCS Guidelines for Prevention & Control of NCDs]
+All individuals aged 30 years and above should undergo annual screening for NCDs (Hypertension, Diabetes, and common cancers).
+Annual screening includes:
+- Blood Pressure check.
+- Random Blood Sugar test.
+- Screening for oral, breast, and cervical cancers at your local Sub-Centre or HWC.
+Annual screening helps detect complications early even if you feel healthy.
+
+[PROTOCOL: LIFESTYLE_AND_DIET_ADHERENCE]
+[Source: WHO HEARTS Healthy Lifestyle Counselling Module, p. 8-14]
+- Salt Intake: Limit daily salt intake to less than 5 grams (1 level teaspoon per day) across all meals. Avoid extra salt on food, pickles, and salty snacks.
+- Physical Activity: Aim for 30 minutes of brisk walking or physical activity daily for at least 5 days a week.
+- Tobacco and Alcohol: Completely avoid smoking, chewing tobacco (khaini, gutka), and consuming alcohol.
+- Dietary Guidance: Eat fresh vegetables, fruits, whole grains, and pulses. Reduce fried foods, sweets, and ghee.
+
+[PROTOCOL: EMERGENCY_RED_FLAGS_WARNING]
+[Source: WHO HEARTS Evidence-Based Treatment Protocols & Clinical Triage]
+The following symptoms are medical emergencies requiring immediate hospital care. Do not wait or self-medicate:
+- Chest pain, chest heaviness, or pressure spreading to the arm, neck, or jaw.
+- Sudden severe shortness of breath or difficulty breathing.
+- Sudden weakness, numbness, or drooping on one side of the face or body.
+- Sudden difficulty speaking or understanding speech.
+- Fainting, loss of consciousness, or severe sudden dizziness.
+- Blood pressure reading above 180/120 mmHg or blood sugar above 300 mg/dL accompanied by illness.
+If any of these symptoms occur, call emergency ambulance services (108/102) or go immediately to the nearest Emergency Facility / Community Health Centre (CHC).
+
+[PROTOCOL: DIETARYGUIDELINESFORNINWEBSITE.PDF_PARAGRAPH_1]
+[Source: DietaryGuidelinesforNINwebsite.pdf]
+[Page 5] EXPERT ADVISORY GROUP OF THE FIRST EDITION  Dr. Achaya KT.                                                     Dr. Rajammal P Devadas  CSIR Emeritus-Scientist                                     Chancellor  Bangalore                                                      Avinashalingam deemed University     Coimbatore  Dr. Bamji. Mahtab S.                                         Dr. Ramachandran A.  Former Director-Grade Scientist, NIN              Diabetes research Centre  ICMR Emeritus scientist Chennai  Hyderabad  Dr. Bhan MK.                                                      Dr. 
+
+[PROTOCOL: DIETARYGUIDELINESFORNINWEBSITE.PDF_PARAGRAPH_2]
+[Source: DietaryGuidelinesforNINwebsite.pdf]
+[Page 10] FOREWORD  It is now more than a decade since this valuable publication was first prepared.  It was compiled by a team of experienced nutrition scientists at the National  Institute of Nutrition, Hyderabad, under the leadership of Dr. Kamala  Krishnaswamy. It has received wide appreciation from the general public as well as  from students of nutrition, medicine, home science, nursing and allied subjects, and  has been reprinted several times. It has also been widely disseminated through  outreach activities undertaken by the National Institute of Nutrition, in the form of  lectures, e
+
+[PROTOCOL: DIETARYGUIDELINESFORNINWEBSITE.PDF_PARAGRAPH_3]
+[Source: DietaryGuidelinesforNINwebsite.pdf]
+[Page 11] PREFACE  The first edition of 'Dietary Guidelines' was published in 1998, and since then  many changes have taken place in the country. The economic transition has  transformed the way people live. Changing lifestyles of people both in rural and  urban areas are seen to alter the very structure of our society at a rapid pace today.  The shift from traditional to 'modern' foods, changing cooking practices, increased  intake of processed and ready-to-eat foods, intensive marketing of junk foods and  'health' beverages have affected people's perception of foods as well as their dietary 
+
+[PROTOCOL: GUIDELINES_FOR_NPPCF.PDF_PARAGRAPH_1]
+[Source: Guidelines for NPPCF.pdf]
+[Page 6] Page | 5       NATIONAL PROGRAMME FOR PREVENTION AND  CONTROL OF FLUOROSIS    Revised Guidelines (2014)    1.  Introduction      Fluorosis, a public health problem is caused by excess intake of fluoride through  drinking water/food products/industrial emission over a long period. It results in major  health disorders like dental fluorosis, skeletal fluorosis and non -skeletal fluorosis. The  late stages of skeletal and dental fluorosis  effects being permanent and irreversible in  nature are detrimental to the health of an individual and the community, which in turn  has  adverse effe
+
+[PROTOCOL: GUIDELINES_FOR_NPPCF.PDF_PARAGRAPH_2]
+[Source: Guidelines for NPPCF.pdf]
+[Page 12] Page | 11     5. Diagnostic support for dental, skeletal and non -skeletal  fluorosis to be established in a District.    6. Basic medical, surgical and rehabilitative activities for cases  diagnosed by district level specialists.    7. Monitoring.    8. Referral of difficult cases to near by Medical College Hospital.    9. The CMO of the district will be the Nodal Officer for NPPCF.      4. State 1. Programme Planning, execution of programme activities,  monitoring, mid -term evaluation and reporting to the Centre  (GOI)   through the State Nodal officer.    2. Receipt and disbursem
+
+[PROTOCOL: GUIDELINES_FOR_NPPCF.PDF_PARAGRAPH_3]
+[Source: Guidelines for NPPCF.pdf]
+[Page 15] Page | 14      Neurological manifestations: Nervousness & depression, tingling sensation in  fingers and toes, excessive thirst and tendency to urinate frequently ( Polydipsia  and polyuria)      Muscular manifestations: Muscle weakness & stiffness, pain in the muscle  and loss of muscle power, unable to walk or work.     [ Fluorosis endemic area refers to a habitation/village/ town having fluoride level  more than 1.5 ppm in drinking water .  It is also possible that the drinking water  fluoride may be safe  with Fluoride <1.5 mg/l; but have  all health complain ts of  Fluorosis. 
+
+[PROTOCOL: ICMR_GUIDELINESTYPE2DIABETES2018_0.PDF_PARAGRAPH_1]
+[Source: ICMR_GuidelinesType2diabetes2018_0.pdf]
+[Page 3] ICMR Guidelines for Management of Type 2 Diabetes 2018 ICMR GUIDELINES FOR MANAGEMENT OF TYPE 2 DIABETES 2018 S.NO CONTENTS PAGE NO. FOREWORD i PREFACE ii ACKNOWLEDGEMENT iii PREAMBLE iv                       SECTION 1 : INTRODUCTION 1.1 Definition 1 1.2 Epidemiology 1 1.3 Types of diabetes 1 1.4 Differentiating between type 1 and type 2 diabetes 2 1.5 Goals for management 4 1.6 Diabetes education 4 1.7 Prevention of diabetes 5                       SECTION 2 : SCREENING FOR TYPE 2 DIABETES 2.1 Whom and when to screen? 7 2.2 How to screen? 7 2.3 Where to screen? 8 2.4 Retesting 8 2.5 
+
+[PROTOCOL: ICMR_GUIDELINESTYPE2DIABETES2018_0.PDF_PARAGRAPH_2]
+[Source: ICMR_GuidelinesType2diabetes2018_0.pdf]
+[Page 4] ICMR Guidelines for Management of Type 2 Diabetes 2018 3.2 Symptoms of diabetes 9 3.3 Criteria for the diagnosis of prediabetes 9 3.4 Oral Glucose Tolerance Test (OGTT) 10 3.5 Testing for type 2 diabetes in children and adolescents 11                       SECTION 4 : TARGETS FOR CONTROL OF DIABETES 4.1 Targets for metabolic control in diabetes 12 4.2 Glycemic targets during pregnancy 13           SECTION 5 : MONITORING AND FOLLOW-UP OF PEOPLE             WITH DIABETES 5.1 How to monitor and follow up people with diabetes? 14 5.2 Self monitoring with blood glucose (SMBG) with glucose 
+
+[PROTOCOL: ICMR_GUIDELINESTYPE2DIABETES2018_0.PDF_PARAGRAPH_3]
+[Source: ICMR_GuidelinesType2diabetes2018_0.pdf]
+[Page 5] ICMR Guidelines for Management of Type 2 Diabetes 2018                       SECTION 8 : COMPLICATIONS OF DIABETES 8.1 Acute complications 48 8.2 Chronic complications 49 8.3 Coronary artery disease 51 8.4 Diabetic nephropathy 52 8.5 Diabetic retinopathy 54 8.6 Diabetic neuropathy 56 8.7 Diabetic foot 57                       SECTION 9 : DIABETES AND PREGNANCY 9.1 Pre-gestational diabetes 63 9.2 Gestational diabetes mellitus (GDM) 63 9.3 Management of hyperglycemia in pregnancy 65 9.4 Post-partum follow up 66                       SECTION 10 : COMORBID CONDITIONS 10.1 Hypertension 67 
+
+[PROTOCOL: WHO_GUIDELINES_ON_PHYSICAL_ACTIVITY_AND_SEDENTARY_BEHAVIOUR_(2020).PDF_PARAGRAPH_1]
+[Source: WHO Guidelines on Physical Activity and Sedentary Behaviour (2020).pdf]
+[Page 6] ACKNOWLEDGEMENTS  The World Health Organization (WHO) gratefully acknowledges the contribution to and support  of the following individuals and organizations in the development of these guidelines: Fiona Bull and Juana Willumsen led the process of developing these guidelines. Valentina Baltag,  Maurice Bucagu, Alex Butchart, Neerja Chowdhary, Regina Guthold, Riitta-Maija Hämäläinen, Andre Ilbawi,  Wasiq Khan, Lindsay Lee, Alana Officer, Leanne Riley and Gojka Roglic were members of the WHO Steering  Group that managed the guideline development process.  The members of the Guideline De
+
+[PROTOCOL: WHO_GUIDELINES_ON_PHYSICAL_ACTIVITY_AND_SEDENTARY_BEHAVIOUR_(2020).PDF_PARAGRAPH_2]
+[Source: WHO Guidelines on Physical Activity and Sedentary Behaviour (2020).pdf]
+[Page 7] ADHD attention deficit hyperactive disorder AOR adjusted odds ratio BMI body mass index CI confidence interval CVD cardiovascular disease DBP diastolic blood pressure EtD Evidence to Decisions GDG Guideline Development Group GRADE Grading of Recommendations Assessment, Development and Evaluation HR hazards ratio MET Metabolic Equivalent of Task MD mean difference MICT moderate intensity continuous training NCD noncommunicable disease OR odds ratio PA physical activity PAGAC United States Physical Activity Guidelines Advisory Committee PI/ECO Population, Intervention/Exposure, Comparis
+
+[PROTOCOL: WHO_GUIDELINES_ON_PHYSICAL_ACTIVITY_AND_SEDENTARY_BEHAVIOUR_(2020).PDF_PARAGRAPH_3]
+[Source: WHO Guidelines on Physical Activity and Sedentary Behaviour (2020).pdf]
+[Page 8] Term Definition Aerobic physical activity Activity in which the body’s large muscles move in a rhythmic manner for a sustained period of time. Aerobic activity –  also called endurance activity – improves cardiorespiratory fitness. Examples include walking, running, swimming, and bicycling. Anaerobic  physical activity Anaerobic physical activity consists of brief intense bursts of exercise, such as weightlifting and sprints, where oxygen  demand surpasses oxygen supply. Balance training Static and dynamic exercises that are designed to improve an individual’s ability to withstand cha
+
+[PROTOCOL: WHO_HEARTS_HEALTHY_LIFESTYLE_COUNSELLING_MODULE.PDF_PARAGRAPH_1]
+[Source: WHO HEARTS Healthy Lifestyle Counselling Module.pdf]
+[Page 4] WHO/NMH/NVI/18.1  © World Health Organization 2018 Some rights reserved. This work is available under the Creative Commons Attribution- NonCommercial-ShareAlike 3.0 IGO licence (CC BY-NC-SA 3.0 IGO;   https://creativecommons.org/licenses/by-nc-sa/3.0/igo). Under the terms of this licence, you may copy, redistribute and adapt the work for non- commercial purposes, provided the work is appropriately cited, as indicated below. In any  use of this work, there should be no suggestion that WHO endorses any specific organization,  products or services. The use of the WHO logo is not permitte
+
+[PROTOCOL: WHO_HEARTS_HEALTHY_LIFESTYLE_COUNSELLING_MODULE.PDF_PARAGRAPH_2]
+[Source: WHO HEARTS Healthy Lifestyle Counselling Module.pdf]
+[Page 5] Contents Acknowledgements 5 HEARTS Technical Package 6 Introduction 8 Target users of this module 8 1 The four main behavioural risk factors for CVD 9 Unhealthy diet 9 Insufficient physical activity 10 Tobacco use 11 Harmful use of alcohol 12 2 Behaviour change 14 Understanding behaviour change  14 Counselling for behaviour change through brief interventions 14 3 Brief interventions to encourage behaviour change 16 General theory of the 5As brief interventions 16 4 Next steps 23 Annex: Material supporting healthy lifestyles 24 References 27 For more information 28
+
+[PROTOCOL: WHO_HEARTS_HEALTHY_LIFESTYLE_COUNSELLING_MODULE.PDF_PARAGRAPH_3]
+[Source: WHO HEARTS Healthy Lifestyle Counselling Module.pdf]
+[Page 7] Acknowledgements The HEARTS technical package modules benefited from the dedication, support  and contributions of a number of experts from American Heart Association; Centre  for Chronic Disease Control (India); International Diabetes Federation; International  Society of Hypertension; International Society of Nephrology; United States  Centers for Disease Control and Prevention; Resolve to Save Lives, an initiative of  Vital Strategies; World Health Organization Regional Office for the Americas/Pan  American Health Organization; World Health Organization; World Heart Federation;  Wo
+
+[PROTOCOL: WHO_HEARTS_RISK-BASED_CVD_MANAGEMENT.PDF_PARAGRAPH_1]
+[Source: WHO HEARTS Risk-Based CVD Management.pdf]
+[Page 7] Acknowledgements The HEARTS technical package modules benefited from the dedication, support  and contributions of a number of experts from American Heart Association; Centre  for Chronic Disease Control (India); International Diabetes Federation; International  Society of Hypertension; International Society of Nephrology; United States  Centers for Disease Control and Prevention; Resolve to Save Lives, an initiative  of Vital Strategies; World Health Organization Regional Office for the Americas/ Pan American Health Organization; World Heart Federation; World Hypertension  League; an
+
+[PROTOCOL: WHO_HEARTS_RISK-BASED_CVD_MANAGEMENT.PDF_PARAGRAPH_2]
+[Source: WHO HEARTS Risk-Based CVD Management.pdf]
+[Page 9] MODULES OF THE HEARTS TECHNICAL PACKAGE Module What does it include? Who are the target users? National Subnational Primary   care Healthy-lifestyle  counselling Information on the four behavioural  risk factors for CVD is provided. Brief  interventions are described as an  approach to providing counselling on  risk factors and encouraging people to  have healthy lifestyles.   Evidence-based  protocols A collection of protocols to standardize a  clinical approach to the management of  hypertension and diabetes.    Access to  essential medicines  and technology Information on CVD 
+
+[PROTOCOL: WHO_HEARTS_RISK-BASED_CVD_MANAGEMENT.PDF_PARAGRAPH_3]
+[Source: WHO HEARTS Risk-Based CVD Management.pdf]
+[Page 10] Introduction Development of cardiovascular disease (CVD) is influenced by risk factors such as:  tobacco use, an unhealthy diet, physical inactivity, obesity (which can result from  a combination of unhealthy diet, physical inactivity, and other factors), elevated  blood pressure (hypertension), abnormal blood lipids (dyslipidaemia) and elevated  blood glucose (diabetes mellitus). Continuing exposure to these risk factors leads  to further progression of atherosclerosis, resulting in clinical manifestations of these  diseases, including angina pectoris, myocardial infarction, heart f
+
+[PROTOCOL: WHO_HEARTS_TECHNICAL_PACKAGE_–_HEALTHY_LIFESTYLE_COUNSELLING_MODULE_(2018).PDF_PARAGRAPH_1]
+[Source: WHO HEARTS Technical Package – Healthy Lifestyle Counselling Module (2018).pdf]
+[Page 4] WHO/NMH/NVI/18.1  © World Health Organization 2018 Some rights reserved. This work is available under the Creative Commons Attribution- NonCommercial-ShareAlike 3.0 IGO licence (CC BY-NC-SA 3.0 IGO;   https://creativecommons.org/licenses/by-nc-sa/3.0/igo). Under the terms of this licence, you may copy, redistribute and adapt the work for non- commercial purposes, provided the work is appropriately cited, as indicated below. In any  use of this work, there should be no suggestion that WHO endorses any specific organization,  products or services. The use of the WHO logo is not permitte
+
+[PROTOCOL: WHO_HEARTS_TECHNICAL_PACKAGE_–_HEALTHY_LIFESTYLE_COUNSELLING_MODULE_(2018).PDF_PARAGRAPH_2]
+[Source: WHO HEARTS Technical Package – Healthy Lifestyle Counselling Module (2018).pdf]
+[Page 5] Contents Acknowledgements 5 HEARTS Technical Package 6 Introduction 8 Target users of this module 8 1 The four main behavioural risk factors for CVD 9 Unhealthy diet 9 Insufficient physical activity 10 Tobacco use 11 Harmful use of alcohol 12 2 Behaviour change 14 Understanding behaviour change  14 Counselling for behaviour change through brief interventions 14 3 Brief interventions to encourage behaviour change 16 General theory of the 5As brief interventions 16 4 Next steps 23 Annex: Material supporting healthy lifestyles 24 References 27 For more information 28
+
+[PROTOCOL: WHO_HEARTS_TECHNICAL_PACKAGE_–_HEALTHY_LIFESTYLE_COUNSELLING_MODULE_(2018).PDF_PARAGRAPH_3]
+[Source: WHO HEARTS Technical Package – Healthy Lifestyle Counselling Module (2018).pdf]
+[Page 7] Acknowledgements The HEARTS technical package modules benefited from the dedication, support  and contributions of a number of experts from American Heart Association; Centre  for Chronic Disease Control (India); International Diabetes Federation; International  Society of Hypertension; International Society of Nephrology; United States  Centers for Disease Control and Prevention; Resolve to Save Lives, an initiative of  Vital Strategies; World Health Organization Regional Office for the Americas/Pan  American Health Organization; World Health Organization; World Heart Federation;  Wo
+
+[PROTOCOL: WHO_HEARTS_TECHNICAL_PACKAGE.PDF_PARAGRAPH_1]
+[Source: WHO HEARTS Technical Package.pdf]
+[Page 5] 5 Abbreviations 6 Preface 8 Introduction 11 Rationale and strategic approach 15 Scope of HEARTS 21 Elements of HEARTS 23 Healthy lifestyle 25 Evidence-based treatment protocols 29 Access to essential medicines and technology 33 Risk-based management 37 Team care and task-sharing 43 Systems for monitoring 49 Approach to implementation 53 References 56 Annex 1. Evidence-based protocols 60 a. Protocol for prevention of heart attacks, strokes and kidney   disease within integrated management of diabetes and  hypertension (WHO-PEN protocol 1) 60 b. Health education and counselling on healt
+
+[PROTOCOL: WHO_HEARTS_TECHNICAL_PACKAGE.PDF_PARAGRAPH_2]
+[Source: WHO HEARTS Technical Package.pdf]
+[Page 6] 6 HEARTS: Technical package for cardiovascular disease management in primary health care Abbreviations CDC  Centers for Disease Control and Prevention (United States) CVD  cardiovascular disease HIV  human immunodeficiency virus ISH   International Society of Hypertension LMICs  low- and middle-income countries NCD  noncommunicable disease PAHO   Pan American Health Organization WHO  World Health Organization WHO-PEN WHO Package of Essential Noncommunicable Disease Interventions    for Primary Health Care in Low-resource Settings Measurements cm  centimetre dL  decilitre L  litre mg  
+
+[PROTOCOL: WHO_HEARTS_TECHNICAL_PACKAGE.PDF_PARAGRAPH_3]
+[Source: WHO HEARTS Technical Package.pdf]
+[Page 8] 8 HEARTS: Technical package for cardiovascular disease management in primary health care Nearly everyone reading this document has been affected by cardiovascular  disease (CVD) in some way, either personally or through someone they know.  If current trends continue, the annual number of deaths from CVD will rise from  17.5 million in 2012 to 22.2 million by 2030.  Four of five people who die from CVD are killed by a heart attack or a  stroke, and one third of these deaths occur in people under 70 years of  age. Heart attacks and strokes, which are often avoidable outcomes, cause  a l
+
+[PROTOCOL: WHO_HEARTS_–_EVIDENCE-BASED_TREATMENT_PROTOCOLS.PDF_PARAGRAPH_1]
+[Source: WHO HEARTS – Evidence-Based Treatment Protocols.pdf]
+[Page 5] Contents Acknowledgements 5 HEARTS Technical Package 6 Introduction 9 Use of module 9 1 Hypertension detection and treatment 10 When to measure blood pressure 10 How to measure blood pressure 10 Diagnosing hypertension 11 Hypertension treatment 11 Sample hypertension treatment protocols 13 2 Diabetes detection and treatment 32 Diabetes risk factors and symptoms 32 Diagnostic testing for diabetes 32 Drug therapy 33 Monitoring glycaemic control 33 Treatment adherence 34 3 Identifying emergencies and need for referral 36 Annex: Example of essential CVD medications 38 References 40
+
+[PROTOCOL: WHO_HEARTS_–_EVIDENCE-BASED_TREATMENT_PROTOCOLS.PDF_PARAGRAPH_2]
+[Source: WHO HEARTS – Evidence-Based Treatment Protocols.pdf]
+[Page 6] Hypertension protocols Hypertension protocol 1: Diuretic as first-line treatment  15 Hypertension protocol 2: CCB as first-line treatment 17 Hypertension protocol 3: ACE-I or ARB as first-line treatment 19 Hypertension protocol 4: ACE-I or ARB + CCB as first-line treatment 21 Hypertension protocol 5: CCB + diuretic as first-line of treatment 23 Hypertension protocol 6: ACE-I or ARB + diuretic as first-line treatment 25 Hypertension protocol 7: Use of BP-lowering drugs in patients   with ischaemic CVD 27 Hypertension protocol 8: Adapted example: CCB as first-line treatment  29 Hyperten
+
+[PROTOCOL: WHO_HEARTS_–_EVIDENCE-BASED_TREATMENT_PROTOCOLS.PDF_PARAGRAPH_3]
+[Source: WHO HEARTS – Evidence-Based Treatment Protocols.pdf]
+[Page 7] Acknowledgements The HEARTS technical package modules benefited from the dedication, support  and contributions of a number of experts from American Heart Association; Centre  for Chronic Disease Control (India); International Diabetes Federation; International  Society of Hypertension; International Society of Nephrology; United States  Centers for Disease Control and Prevention; Resolve to Save Lives, an initiative of  Vital Strategies; World Health Organization Regional Office for the Americas/Pan  American Health Organization; World Health Organization; World Heart Federation;  Wo
+
+[PROTOCOL: WHO-NMH-NVI-18.14-ENG.PDF_PARAGRAPH_1]
+[Source: WHO-NMH-NVI-18.14-eng.pdf]
+[Page 9] MODULES OF THE HEARTS TECHNICAL PACKAGE Module What does it include? Who are the target users? National Subnational Primary   care Healthy-lifestyle  counselling Information on the four behavioural  risk factors for CVD is provided. Brief  interventions are described as an  approach to providing counselling on  risk factors and encouraging people to  have healthy lifestyles.   Evidence-based  protocols A collection of protocols to standardize a  clinical approach to the management of  hypertension and diabetes.    Access to  essential medicines  and technology Information on CVD 
+
+[PROTOCOL: WHO-NMH-NVI-18.14-ENG.PDF_PARAGRAPH_2]
+[Source: WHO-NMH-NVI-18.14-eng.pdf]
+[Page 10] Implementing HEARTS HEARTS provides a set of locally adaptable tools for strengthening the  management of CVD in primary health care.  HEARTS is designed to enhance implementation of WHO PEN by providing:   • operational guidance on further integrating CVD management   • technical guidance on evaluating the impact of CVD care on patient outcomes.  For countries not using WHO PEN, CVD management can still be integrated into  primary health care. The process of implementing HEARTS will vary, depending  on country context, and may require a significant reorienting and strengthening  of 
+
+[PROTOCOL: WHO-NMH-NVI-18.14-ENG.PDF_PARAGRAPH_3]
+[Source: WHO-NMH-NVI-18.14-eng.pdf]
+[Page 12] Step 1: Engage stakeholders To successfully implement HEARTS, first establish buy-in from stakeholders.  Engage key stakeholders through a meeting with national policymakers and  through the creation of a technical working group.  (a)  Meet with national policymakers  Implementing HEARTS in existing primary health care systems requires strong,  high-level political commitment, leadership, and ownership by the Ministry of  Health (MoH). MoH endorsement and involvement are essential to laying the  necessary groundwork for successful implementation.  When meeting with policymakers, it i
+
+[PROTOCOL: WHO-NMH-NVI-18.4-ENG.PDF_PARAGRAPH_1]
+[Source: WHO-NMH-NVI-18.4-eng.pdf]
+[Page 5] Contents Acknowledgements 5 HEARTS Technical Package 6 Introduction 8 What this module includes  8 1 About team-based care 9 Advantages	 9 Barriers 10 Requirements  10 2 Implementing team-based care  11 Steps to implementing team-based care 11 1 Engage the team 11 2 Determine the team composition 11 3 Design workflows to reflect the new model of care 15 4 Increase communication among the team,   practice and patients 20 5 Use a gradual approach to implement the model 20 6 Optimize the care model 20 3 Case studies  22 Hypertension care in Thailand 22 Team-based care for NCDs in Nepal 2
+
+[PROTOCOL: WHO-NMH-NVI-18.4-ENG.PDF_PARAGRAPH_2]
+[Source: WHO-NMH-NVI-18.4-eng.pdf]
+[Page 6] Figures Figure 1: Workflow for non-physician blood pressure check  15 Figure 2: Clinical workflow example:   integrated patient pathway, Thailand 16 Figure 3: Workflow mapping worksheet example:   chronic care 18 Figure 4: Workflow mapping worksheet example:   blood pressure control 19 Tables Table 1: Team-based care for hypertension in Cuba 12 Table 2: Distribution of staff responsibility for hypertension   management 13 Table 3: Task reassignment table for clinic and staff management 14 Boxes Box 1: Implementation steps 11 Box 2: Team-based care pilot 20 Box 3: The benefits of team-
+
+[PROTOCOL: WHO-NMH-NVI-18.4-ENG.PDF_PARAGRAPH_3]
+[Source: WHO-NMH-NVI-18.4-eng.pdf]
+[Page 7] Acknowledgements The HEARTS technical package modules benefited from the dedication, support  and contributions of a number of experts from American Heart Association; Centre  for Chronic Disease Control (India); International Diabetes Federation; International  Society of Hypertension; International Society of Nephrology; United States  Centers for Disease Control and Prevention; Resolve to Save Lives, an initiative of  Vital Strategies; World Health Organization Regional Office for the Americas/Pan  American Health Organization; World Health Organization; World Heart Federation;  Wo
+
+[PROTOCOL: WHO-UCN-NCD-20.1-ENG.PDF_PARAGRAPH_1]
+[Source: WHO-UCN-NCD-20.1-eng.pdf]
+[Page 4] WHO/UCN/NCD/20.1 © World Health Organization 2020 Some rights reserved. This work is available under the Creative Commons Attribution- NonCommercial-ShareAlike 3.0 IGO licence (CC BY-NC-SA 3.0 IGO; https://creativecommons. org/licenses/by-nc-sa/3.0/igo).  Under the terms of this licence, you may copy, redistribute and adapt the work for non- commercial purposes, provided the work is appropriately cited, as indicated below. In any  use of this work, there should be no suggestion that WHO endorses any specific organization,  products or services. The use of the WHO logo is not permitted
+
+[PROTOCOL: WHO-UCN-NCD-20.1-ENG.PDF_PARAGRAPH_2]
+[Source: WHO-UCN-NCD-20.1-eng.pdf]
+[Page 5] Contents Acknowledgements 7 Abbreviations 7  Diagnosis and management of type 2 diabetes  8 Introduction 9 Definition of diabetes 9 Epidemiology and global burden of diabetes  9 Aetio-pathology of diabetes  9 Most common types of diabetes and their risk factors 9 Classification of diabetes  10 1 Clinical manifestations of diabetes and diagnostic criteria 12 Clinical manifestations  12 Diagnostic criteria for diabetes 13 Diagnostic tests  13 2 Management of diabetes 14 Blood glucose management protocol  14 Monitoring of glycaemic control 17 3 Prevention and management of complications 
+
+[PROTOCOL: WHO-UCN-NCD-20.1-ENG.PDF_PARAGRAPH_3]
+[Source: WHO-UCN-NCD-20.1-eng.pdf]
+[Page 6] Tables Table 1 Classification of diabetes 11 Table 2 Symptoms and signs of diabetes 12 Table 3 Diagnostic criteria for diabetes 13 Table 4 Symptoms and signs of hypoglycaemia 18 Table 5 Biochemical characteristics of DKA and HHS measurable   in primary care facilities 19 Table 6 Categories of albuminuria (measured by ACR) 22 Table 7 Assessment of effectiveness of diabetes services 27 Table 8 Stratification of level of risk of developing diabetic   foot problems or the need for an amputation 33 Figures Fig. 1 Protocol for control of blood glucose in type 2 diabetes* 16 Fig. 2 Type 2 di

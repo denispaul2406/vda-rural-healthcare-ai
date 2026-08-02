@@ -1,0 +1,206 @@
+@import url('https://fonts.googleapis.com/css2?family=Hind:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Purpose-built VDA Rural Health Palette */
+  --paper: #FAF5EC;          /* Outdoor sunlight high-contrast background */
+  --ink: #3A2E28;            /* Warm dark brown typography */
+  --ink-secondary: #6B5D53;  /* Warm secondary brown */
+  --ink-tertiary: #8C7D72;   /* Subtle label brown */
+  
+  --rose: #B8456B;           /* Primary action - ASHA worker sari rose */
+  --rose-light: #F4DDE5;     /* Soft rose highlight */
+  
+  --leaf: #4C7A5E;           /* Safe confirmation green */
+  --leaf-light: #E1EDE4;     /* Soft leaf background */
+  
+  --alert: #B23A24;          /* Medical emergency red */
+  --alert-light: #F5DCD5;    /* Soft emergency background */
+  
+  --sand: #EDE4D3;           /* Card background & divider */
+  --sand-border: #DED5C2;    /* Soft card border */
+  --sand-card: #F3EBDC;      /* Card surface */
+  
+  /* Inspector View Dark Tokens */
+  --inspector-bg: #111318;
+  --inspector-card: #1a1d24;
+  --inspector-border: #2a2e38;
+  --inspector-text: #e2e8f0;
+  --inspector-muted: #94a3b8;
+  --inspector-accent: #38bdf8;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: 'Hind', 'Plus Jakarta Sans', -apple-system, sans-serif;
+  background-color: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+  letter-spacing: -0.005em;
+  line-height: 1.5;
+}
+
+/* Patient Card Container */
+.vda-card {
+  background: var(--sand-card);
+  border: 1px solid var(--sand-border);
+  border-radius: 20px;
+  box-shadow: 0 4px 16px rgba(58, 46, 40, 0.04);
+}
+
+/* Patient Mic Button */
+.vda-mic-btn {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: var(--rose);
+  color: #FFFFFF;
+  border: 4px solid var(--paper);
+  box-shadow: 0 8px 24px rgba(184, 69, 107, 0.35);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  min-height: 48px;
+  min-width: 48px;
+}
+
+.vda-mic-btn:hover {
+  transform: scale(1.04);
+  box-shadow: 0 12px 28px rgba(184, 69, 107, 0.45);
+}
+
+.vda-mic-btn-recording {
+  background: var(--alert);
+  box-shadow: 0 0 0 8px rgba(178, 58, 36, 0.2);
+  animation: pulseRecording 1.8s infinite ease-in-out;
+}
+
+@keyframes pulseRecording {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 6px rgba(178, 58, 36, 0.2); }
+  50% { transform: scale(1.05); box-shadow: 0 0 0 14px rgba(178, 58, 36, 0.35); }
+}
+
+/* Patient Emergency Box */
+.vda-emergency-card {
+  background: var(--alert-light);
+  border: 2px solid var(--alert);
+  border-radius: 20px;
+  padding: 24px;
+}
+
+/* Emergency Call Action Button */
+.vda-call-btn {
+  background: var(--alert);
+  color: #FFFFFF;
+  font-size: 18px;
+  font-weight: 700;
+  padding: 16px 28px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 16px rgba(178, 58, 36, 0.3);
+  text-decoration: none;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+  min-height: 48px; /* 44px+ touch target */
+}
+
+.vda-call-btn:hover {
+  transform: translateY(-2px);
+  background-color: #9c2e1a;
+}
+
+/* Quiet Scenario Pill Chips */
+.vda-chip {
+  background: #FFFFFF;
+  border: 1px solid var(--sand-border);
+  border-radius: 12px;
+  padding: 10px 16px;
+  color: var(--ink-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+  min-height: 44px; /* Touch target compliance */
+}
+
+.vda-chip:hover {
+  background: var(--rose-light);
+  border-color: var(--rose);
+  color: var(--rose);
+}
+
+.vda-chip-alert {
+  background: #FFFFFF;
+  border: 1px solid #E8C5BE;
+  color: var(--alert);
+}
+
+.vda-chip-alert:hover {
+  background: var(--alert-light);
+  border-color: var(--alert);
+}
+
+/* Inspector View Panel */
+.inspector-panel {
+  background: var(--inspector-bg);
+  color: var(--inspector-text);
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  border: 1px solid var(--inspector-border);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.inspector-card {
+  background: var(--inspector-card);
+  border: 1px solid var(--inspector-border);
+  border-radius: 10px;
+  padding: 14px;
+}
+
+/* Responsive Media Queries for Mobile & Tablet Optimization */
+@media (max-width: 640px) {
+  header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
+  }
+  
+  .vda-mic-btn {
+    width: 80px;
+    height: 80px;
+  }
+
+  .vda-call-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .inspector-panel {
+    padding: 16px;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(58, 46, 40, 0.2);
+  border-radius: 10px;
+}

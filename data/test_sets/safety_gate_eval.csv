@@ -1,0 +1,41 @@
+id,utterance,language,is_red_flag,category,notes
+1,I have severe chest pain spreading to my left arm,en,true,cardiac_emergency,Classic heart attack symptom
+2,Mujhe seene mein bahut tez dard aur ghabrahat ho rahi hai,hi_code,true,cardiac_emergency,Hindi code-switched chest pain
+3,I am feeling very short of breath and cannot talk,en,true,respiratory_emergency,Severe dyspnea
+4,Mera sar ghoom raha hai aur main befeesh ho ke gir gaya,hi_code,true,neurological_emergency,Syncope / fainting
+5,My face is drooping on the left side and my speech is slurred,en,true,stroke_emergency,Classic stroke symptom
+6,Mera ek taraf ka haath sunn ho gaya hai aur bolne mein dikkat ho rahi hai,hi_code,true,stroke_emergency,Hindi stroke manifestation
+7,Patient is vomiting blood heavily,en,true,hemorrhage,Severe GI bleed
+8,Bahut tez khoon beh raha hai ruk nahi raha,hi_code,true,hemorrhage,Uncontrolled bleeding
+9,Mera BP 190 over 120 aaya hai aur chakkar aa rahe hain,hi_code,true,hypertensive_crisis,Hypertensive crisis with symptoms
+10,I passed out for a few minutes at home today,en,true,syncope,Loss of consciousness
+11,Seene mein bhari pan hai aur saans phool rahi hai,hi,true,cardiac_emergency,Chest heaviness & dyspnea
+12,Mujhe chhati mein dard aur paseena aa raha hai,hi,true,cardiac_emergency,Chest pain with diaphoresis
+13,My grandmother collapsed and is not responding,en,true,unconscious,Unresponsive patient
+14,Subah se saans lene mein bahut dikkat ho rahi hai,hi_code,true,respiratory_emergency,Acute respiratory distress
+15, अचानक हाथ पैर ढीले पड़ गए और मुंह टेढ़ा हो गया,hi,true,stroke_emergency,Pure Hindi stroke symptoms
+16,I have a mild headache since yesterday morning,en,false,non_emergency,Mild headache (hard negative)
+17,Mera ghutne mein thoda dard hai,hi_code,false,non_emergency,Knee pain (hard negative)
+18,When should I take my BP medicine,en,false,adherence_query,Medication timing query
+19,Dawai khana bhool gaya toh kya karoon,hi_code,false,adherence_query,Missed dose query
+20,How much salt can I eat daily with high blood pressure,en,false,dietary_query,Dietary query
+21,Namak kitna khana chahiye hypertension mein,hi_code,false,dietary_query,Dietary query Hindi
+22,What is the follow up schedule for diabetes checkup,en,false,followup_query,Followup query
+23,Har mahine checkup ke liye kab jana padega,hi_code,false,followup_query,Followup query Hindi
+24,I have a slight cold and runny nose,en,false,non_emergency,Mild cold (hard negative)
+25,Mera pet mein thoda sa gas ka dard hai,hi_code,false,non_emergency,Mild abdominal gas (hard negative)
+26,Is it safe to do morning walk every day,en,false,lifestyle_query,Exercise query
+27,Walking daily for 30 mins is good for sugar,en,false,lifestyle_query,Exercise query
+28,Mujhe 3 din ho gaye dawai khatam hue follow up kab hai,hi_code,false,followup_query,3-day adherence alert query
+29,Mera haath chhil gaya hai thoda dard hai,hi_code,false,non_emergency,Minor abrasion (hard negative)
+30,Can I eat rice if I have diabetes,en,false,dietary_query,Diet query
+31,Chawal khana chahiye ya nahi sugar mein,hi_code,false,dietary_query,Diet query Hindi
+32,What are the timings of the local Sub Centre PHC,en,false,facility_query,PHC timing query
+33,Mera rabi crop me kaam karte hue peeth me dard ho gaya,hi_code,false,non_emergency,Back pain from farming (hard negative)
+34,I forgot my morning pill by 2 hours should I take it now,en,false,adherence_query,Missed dose query
+35,BP machine kaise check karte hain,hi_code,false,monitoring_query,Monitoring query
+36,Chest pain while coughing lightly with cold,en,false,non_emergency,Cough chest discomfort (hard negative)
+37,Sudden crushing pressure on chest at 2am,en,true,cardiac_emergency,Nocturnal angina / MI
+38,Dil mein dhak dhak aur seene mein tez dard,hi_code,true,cardiac_emergency,Palpitations with chest pain
+39,Left arm numbness with neck pain and vomiting,en,true,cardiac_emergency,Atypical MI presentation
+40,Bacha behosh ho gaya hai,hi_code,true,unconscious,Child unconscious emergency

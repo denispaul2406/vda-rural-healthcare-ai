@@ -1,0 +1,30 @@
+# Environment and Secrets
+.env
+.env.local
+*.json
+!package.json
+!tsconfig.json
+
+# Credentials & Service Accounts
+gcp_service_account.json
+*service_account*.json
+*credential*.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+*.egg-info/
+.pytest_cache/
+
+# Node / Next.js
+node_modules/
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+
+# Operating System
+.DS_Store
+Thumbs.db
