@@ -165,7 +165,7 @@ export default function VDAMiniApp() {
             </h2>
           </div>
           <p style={{ fontSize: '13px', color: '#6B5D53', marginTop: '2px' }}>
-            NCD Care & Lifestyle Guidance • Medtronic Labs Challenge
+            AI-Guided NCD Navigation (UC1-UC4 Live) • Medtronic Labs Challenge
           </p>
         </div>
 
@@ -354,7 +354,7 @@ export default function VDAMiniApp() {
           {/* Scenario Chips for UC1 & UC2 Live Navigation */}
           <div style={{ textAlign: 'center' }}>
             <div style={{ fontSize: '12px', fontWeight: 600, color: '#8C7D72', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '12px' }}>
-              Demo Test Scenarios (UC1 Adherence & UC2 Lifestyle)
+              Demo Test Scenarios (UC1 Adherence, UC2 Scheme Check, UC3 Facility Linkage, UC4 Triage)
             </div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', justifyContent: 'center' }}>
               <button
@@ -410,7 +410,7 @@ export default function VDAMiniApp() {
                 INSPECTOR MODE — EVALUATOR TELEMETRY
               </h3>
               <p style={{ fontSize: '12px', color: '#94a3b8', marginTop: '2px' }}>
-                Active Provider: <span style={{ color: '#f43f5e', fontWeight: 600 }}>{provider.toUpperCase()}</span> • Active Use Cases: <span style={{ color: '#34d399', fontWeight: 600 }}>UC1 (Adherence) & UC2 (Lifestyle)</span>
+                Active Provider: <span style={{ color: '#f43f5e', fontWeight: 600 }}>{provider.toUpperCase()}</span> • Active Use Cases: <span style={{ color: '#34d399', fontWeight: 600 }}>UC1, UC2, UC3, UC4 — 100% Live</span>
               </p>
             </div>
             <button onClick={handlePurgeSession} style={{ padding: '6px 12px', background: 'rgba(239,68,68,0.2)', border: '1px solid #ef4444', color: '#f87171', borderRadius: '6px', cursor: 'pointer', fontSize: '12px' }}>
