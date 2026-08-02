@@ -1,0 +1,20 @@
+[PROTOCOL: BENGALURU_RURAL_FACILITY_DIRECTORY_HWCS]
+[Source: Health & Family Welfare Services, Govt of Karnataka & National Health Portal Directory]
+Public Health & Wellness Centres (HWCs) and Sub-Centres in Bengaluru Rural District (Hoskote, Nelamangala, Doddaballapura, Devanahalli):
+- Doddaballapura Health and Wellness Centre (HWC): Open Monday to Saturday 9:00 AM - 4:30 PM. Services: Free Blood Pressure screening, Random Blood Sugar testing, free monthly refill of Amlodipine & Metformin, ASHA counselling.
+- Nelamangala Health and Wellness Centre (HWC): Open Monday to Saturday 9:00 AM - 4:30 PM. Services: NCD screening, hypertension routine follow-up, dietary guidance.
+- Hoskote Health and Wellness Centre (HWC): Open Monday to Saturday 9:00 AM - 4:30 PM. Services: Free BP checkup, diabetes screening, referral to Hoskote General Hospital.
+- Devanahalli Sub-Centre HWC: Open Monday to Saturday 9:00 AM - 4:30 PM. Services: Basic NCD follow-up and ANM home visits.
+
+[PROTOCOL: BENGALURU_RURAL_FACILITY_DIRECTORY_PHCS_AND_CHCS]
+[Source: Karnataka State Health Directory - Bengaluru Rural District]
+Primary Health Centres (PHCs) and Community Health Centres (CHCs) in Bengaluru Rural District:
+- Nelamangala General / Taluk Hospital (CHC): Open 24/7 for emergencies. Services: Medical Officer consultation, lab diagnostics, ECG, Emergency Red-Flag Triage, 24/7 Ambulance dispatch (Call 108).
+- Doddaballapura District / General Hospital: Open 24/7 for emergencies. Services: Intensive Care Unit (ICU), Cardiac Triage, Stroke Management, Diabetes Complications Ward, free dialysis.
+- Hoskote General Hospital: Open 24/7. Services: Secondary care, emergency stabilization, doctor teleconsultation linkage.
+
+[PROTOCOL: KARNATAKA_HEALTH_HELPLINES_AND_AMBULANCE]
+[Source: Health & Family Welfare Department, Government of Karnataka]
+- Emergency Ambulance Service: Dial 108 (Arogya Kavacha 108 Ambulance Service - 24/7 Free Emergency Medical Response).
+- State Health Information Helpline: Dial 104 (Karnataka Tele-Health Helpline for free medical guidance and facility navigation).
+- Ayushman Bharat PM-JAY Karnataka Helpdesk: Visit your nearest Taluk Hospital or call 1800-425-8330 for Suvarna Arogya Suraksha Trust (SAST) Golden Card assistance.

@@ -8,15 +8,16 @@ logger = logging.getLogger(__name__)
 
 def parse_protocol_file(filepath: str) -> List[Dict[str, str]]:
     """
-    Parses structured protocol text into chunks with metadata tags across UC1 & UC2.
+    Parses structured protocol text into chunks with metadata tags across UC1, UC2, and UC3.
     """
     chunks = []
     
-    # Target files: data/protocols/uc1/ncd_guidelines.txt and data/protocols/uc2/scheme_entitlement.txt
+    # Target protocol files for UC1, UC2, and UC3
     protocol_dir = os.path.dirname(os.path.dirname(os.path.dirname(filepath)))
     target_files = [
         os.path.join(protocol_dir, "data", "protocols", "uc1", "ncd_guidelines.txt"),
-        os.path.join(protocol_dir, "data", "protocols", "uc2", "scheme_entitlement.txt")
+        os.path.join(protocol_dir, "data", "protocols", "uc2", "scheme_entitlement.txt"),
+        os.path.join(protocol_dir, "data", "protocols", "uc3", "bengaluru_rural_facilities.txt")
     ]
 
     for target_path in target_files:
@@ -34,7 +35,12 @@ def parse_protocol_file(filepath: str) -> List[Dict[str, str]]:
             header = lines[0].replace("]", "").strip()
             body = "\n".join(lines[1:]).strip()
 
-            use_case = "UC2" if "scheme" in target_path.lower() or "pmjay" in header.lower() or "abha" in header.lower() else "UC1"
+            if "facility" in target_path.lower() or "hospital" in header.lower() or "helpline" in header.lower():
+                use_case = "UC3"
+            elif "scheme" in target_path.lower() or "pmjay" in header.lower() or "abha" in header.lower():
+                use_case = "UC2"
+            else:
+                use_case = "UC1"
 
             chunk_record = {
                 "chunk_id": f"{use_case.lower()}_chunk_{len(chunks)}",
@@ -44,12 +50,12 @@ def parse_protocol_file(filepath: str) -> List[Dict[str, str]]:
             }
             chunks.append(chunk_record)
 
-    logger.info(f"[IndexBuilder] Parsed {len(chunks)} protocol chunks for RAG index.")
+    logger.info(f"[IndexBuilder] Parsed {len(chunks)} protocol chunks across UC1, UC2, and UC3 RAG index.")
     return chunks
 
 class SimpleTFIDFIndex:
     """
-    Lightweight, self-contained Vector Index for UC1 & UC2 Protocol Retrieval.
+    Lightweight, self-contained Vector Index for UC1, UC2, and UC3 Protocol Retrieval.
     No heavy external C dependencies needed; guarantees 100% reliable local execution on any machine.
     """
 

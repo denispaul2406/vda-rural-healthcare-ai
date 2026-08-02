@@ -152,13 +152,13 @@ export default function VDAMiniApp() {
 
   return (
     <main style={{ maxWidth: '880px', margin: '0 auto', padding: '36px 20px 80px 20px' }}>
-      
+
       {/* Top Navbar Header */}
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '36px' }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B8456B" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
             </svg>
             <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#3A2E28' }}>
               Virtual Digital Assistant
@@ -171,7 +171,7 @@ export default function VDAMiniApp() {
 
         {/* View Mode & Provider Selector */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          
+
           <select
             value={provider}
             onChange={(e) => setProvider(e.target.value)}
@@ -217,15 +217,15 @@ export default function VDAMiniApp() {
       {/* ========================================================================= */}
       {mode === 'patient' && (
         <div>
-          
+
           {/* Emergency Escalation Overlay Card */}
           {turnResult && turnResult.safety_escalated ? (
             <div className="vda-emergency-card" style={{ marginBottom: '36px' }}>
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
                 <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#B23A24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
-                  <line x1="12" y1="9" x2="12" y2="13"/>
-                  <line x1="12" y1="17" x2="12.01" y2="17"/>
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                  <line x1="12" y1="9" x2="12" y2="13" />
+                  <line x1="12" y1="17" x2="12.01" y2="17" />
                 </svg>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: '13px', fontWeight: 700, color: '#B23A24', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
@@ -241,7 +241,7 @@ export default function VDAMiniApp() {
                   <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
                     <a href="tel:108" className="vda-call-btn">
                       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                       </svg>
                       Call Ambulance (108 / 102)
                     </a>
@@ -259,8 +259,8 @@ export default function VDAMiniApp() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', fontWeight: 700, color: '#4C7A5E', textTransform: 'uppercase' }}>
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
-                      <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                      <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+                      <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
                     </svg>
                     VDA Care & Lifestyle Guidance / स्वास्थ्य सलाह
                   </div>
@@ -279,7 +279,7 @@ export default function VDAMiniApp() {
 
           {/* Core Interactive Mic Focal Area */}
           <div className="vda-card" style={{ padding: '48px 24px', textAlign: 'center', marginBottom: '32px' }}>
-            
+
             {/* Language Selector */}
             <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginBottom: '32px' }}>
               <button
@@ -312,10 +312,10 @@ export default function VDAMiniApp() {
                 aria-label="Tap to speak"
               >
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
-                  <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-                  <line x1="12" y1="19" x2="12" y2="23"/>
-                  <line x1="8" y1="23" x2="16" y2="23"/>
+                  <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+                  <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                  <line x1="12" y1="19" x2="12" y2="23" />
+                  <line x1="8" y1="23" x2="16" y2="23" />
                 </svg>
               </button>
 
@@ -361,35 +361,35 @@ export default function VDAMiniApp() {
                 onClick={() => handleSendTurn('सीने में दर्द हो रहा है')}
                 className="vda-chip vda-chip-alert"
               >
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" /></svg>
                 UC4 Red-Flag: सीने में दर्द
               </button>
               <button
                 onClick={() => handleSendTurn('What time should I take my BP medicine?')}
                 className="vda-chip"
               >
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M10.5 20.5l10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7z"/><line x1="8.5" y1="8.5" x2="15.5" y2="15.5"/></svg>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M10.5 20.5l10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7z" /><line x1="8.5" y1="8.5" x2="15.5" y2="15.5" /></svg>
                 UC1: BP Medicine Schedule
-              </button>
-              <button
-                onClick={() => handleSendTurn('How much salt can I eat daily with high blood pressure?')}
-                className="vda-chip"
-              >
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                UC1: Salt & Diet (&lt;5g/day)
               </button>
               <button
                 onClick={() => handleSendTurn('Am I eligible for Ayushman Bharat PM-JAY 5 Lakh free hospital card?')}
                 className="vda-chip"
               >
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" /></svg>
                 UC2: Ayushman Bharat Scheme Check
+              </button>
+              <button
+                onClick={() => handleSendTurn('Where is the nearest PHC hospital or Sub-Centre in Doddaballapura or Nelamangala?')}
+                className="vda-chip"
+              >
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                UC3: Nearest HWC / PHC Facility (Bengaluru Rural)
               </button>
               <button
                 onClick={() => handleSendTurn('Who won the IPL cricket match yesterday?')}
                 className="vda-chip"
               >
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><line x1="4.93" y1="4.93" x2="19.07" y2="19.07" /></svg>
                 Out-of-Scope Query
               </button>
             </div>
@@ -403,7 +403,7 @@ export default function VDAMiniApp() {
       {/* ========================================================================= */}
       {mode === 'inspector' && (
         <div className="inspector-panel">
-          
+
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', paddingBottom: '16px', borderBottom: '1px solid #2a2e38' }}>
             <div>
               <h3 style={{ fontSize: '16px', color: '#38bdf8', fontWeight: 700 }}>
@@ -425,7 +425,7 @@ export default function VDAMiniApp() {
           ) : (
             <div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '14px', marginBottom: '24px' }}>
-                
+
                 <div className="inspector-card">
                   <div style={{ fontSize: '11px', color: '#94a3b8', textTransform: 'uppercase' }}>Turn Latency</div>
                   <div style={{ fontSize: '18px', fontWeight: 700, color: '#38bdf8', marginTop: '4px' }}>{turnResult.latency_ms} ms</div>
