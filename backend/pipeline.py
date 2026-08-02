@@ -21,7 +21,7 @@ class VDAPipeline:
     1. STT (Speech-to-Text) & Language Identification
     2. Intent Classification & Confidence Check
     3. Safety Gate (Deterministic Red-Flag Rule Check) -> SHORT-CIRCUITS ON EMERGENCY
-    4. RAG Retrieval & Grounded LLM Agent
+    4. RAG Retrieval (with Intent-Routed Index Isolation) & Grounded LLM Agent
     5. TTS (Text-to-Speech) Audio Generation
     6. Ephemeral Session Context Update
     """
@@ -148,10 +148,10 @@ class VDAPipeline:
             }
 
         # -------------------------------------------------------------
-        # STAGE 4: RAG Retrieval & Agent Grounded Answer Generation
+        # STAGE 4: RAG Retrieval (with Intent-Routed Index Isolation)
         # -------------------------------------------------------------
-        pipeline_log.append(f"[STAGE 4] Executing RAG retrieval against isolated UC1 index.")
-        retrieved_chunks, meets_thresh = self.rag_retriever.retrieve(transcript)
+        pipeline_log.append(f"[STAGE 4] Executing Intent-Routed RAG retrieval for intent: {intent}.")
+        retrieved_chunks, meets_thresh = self.rag_retriever.retrieve(transcript, target_intent=intent)
         
         if not meets_thresh:
             pipeline_log.append("[STAGE 4] RAG similarity score below threshold. Returning grounded refusal.")

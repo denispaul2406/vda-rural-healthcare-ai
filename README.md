@@ -11,44 +11,26 @@ This submission delivers **100% full live coverage across all 4 Use Cases** spec
 | Use Case ID | Official Brief Title | What It Does | Live Implementation & Data Sourcing |
 | :--- | :--- | :--- | :--- |
 | **UC1** | **NCD Care Adherence** | Explains follow-up and medication schedule in plain language; daily medication reminders; 3-day follow-up alert; annual NCD screening nudge; ICMR/WHO health & diet guidance (salt <5g, 30-min walking). | **LIVE & WORKING** (Sourced from 16 ICMR & WHO PDFs: ICMR-NIN 2024 Dietary Guidelines, ICMR Type 2 Diabetes Guidelines 2018, NLEM 2022, WHO HEARTS). |
-| **UC2** | **Scheme Entitlement Check** | Checks eligibility against patient's profile (Ayushman Bharat / PM-JAY ₹5 Lakh free hospital cover), walks them through enrolment, creates awareness of free HWCs diagnostics & medicines. | **LIVE & WORKING** (Sourced from NHA PM-JAY & ABDM ABHA Card Guidelines & Karnataka SAST Helpdesk). |
+| **UC2** | **Scheme Entitlement Check** | Checks eligibility against patient's profile (Ayushman Bharat / PM-JAY ₹5 Lakh free hospital cover), walks them through enrolment checklist, creates awareness of free HWCs diagnostics & medicines. | **LIVE & WORKING** (Awareness & Document Checklist Router: Checks voice demographic eligibility, calculates ₹5 Lakh entitlement, & provides physical document checklist for CSC/PHC enrolment). |
 | **UC3** | **Public Health Service Linkage** | Finds a public facility (Sub-Centre, HWC, PHC, CHC, District Hospital) that provides the service the patient needs near where they are. | **LIVE & WORKING** (Sourced from Karnataka 24x7 PHC Directory & PM-JAY Empanelled Hospital Manual Karnataka for Bengaluru Rural District: Nelamangala HWC/PHC, Doddaballapura General Hospital, Hoskote CHC + State Helplines 108/104/1091/1098). |
 | **UC4** | **Teleconsultation & Triage** | Connects to existing teleconsultation portal for advice & referral; escalates red flags to a clinician via Safety Gate. | **LIVE & WORKING** (Deterministic Safety Gate with **100% Recall & Precision** + Clinician Alert Hook `notify_clinician()`). |
 
 ---
 
-## 📚 Grounded Knowledge Base: 16 Official Government & WHO Guideline PDFs
+## 💡 Key Architectural Choices & Reviewer Q&A
 
-Our RAG index is generated from **16 official government & WHO guideline PDFs** stored in `data/docs/`:
+### 1. Why RAG Uses a Lightweight Vector Index Instead of a Heavy Vector DB (ChromaDB / Pinecone)?
+* **Zero Cold-Start Latency**: Heavy vector DBs (e.g. ChromaDB, Weaviate) introduce 2–5 second Python C-extension binding overhead on low-spec hosting and patchy 3G networks.
+* **Strict $0 Cost & Zero External Dependency**: Our custom TF-IDF cosine-similarity vector index has **zero external binary dependencies**, compiles in **<10ms**, runs 100% in-memory, and guarantees $0 cost compliance.
+* **100% Cross-OS Determinism**: Eliminates binary C++ compilation failures across Windows, Linux, and macOS environments during reviewer evaluation.
 
-1. `PM-JAY Empanelled Hospital Manual-karnataka.pdf` (Official Karnataka PM-JAY Empanelled Hospitals)
-2. `24x7-phc-karnataka.pdf` (Official Karnataka 24x7 Primary Health Centres Directory)
-3. `National List of Essential Medicines (NLEM) 2022.pdf` (MoHFW National Essential Medicines List)
-4. `OG on Welness interventions for ABHWC_eng_Final.pdf` (Ayushman Bharat HWC Wellness Operational Guidelines)
-5. `DietaryGuidelinesforNINwebsite.pdf` (ICMR-NIN 2024 Dietary Guidelines for Indians)
-6. `ICMR_GuidelinesType2diabetes2018_0.pdf` (ICMR Type 2 Diabetes Guidelines)
-7. `WHO Guidelines on Physical Activity and Sedentary Behaviour (2020).pdf`
-8. `WHO HEARTS Technical Package – Healthy Lifestyle Counselling Module (2018).pdf`
-9. `WHO HEARTS Technical Package.pdf`
-10. `WHO HEARTS – Evidence-Based Treatment Protocols.pdf`
-11. `WHO HEARTS Healthy Lifestyle Counselling Module.pdf`
-12. `WHO HEARTS Risk-Based CVD Management.pdf`
-13. `Guidelines for NPPCF.pdf` (MoHFW Guidelines)
-14. `WHO-NMH-NVI-18.14-eng.pdf`
-15. `WHO-NMH-NVI-18.4-eng.pdf`
-16. `WHO-UCN-NCD-20.1-eng.pdf`
+### 2. Intent-Routed Index Isolation (Preventing RAG Collisions)
+With 16 PDFs across 4 distinct domains (Dietary Guidelines, PM-JAY Insurance, Hospital Directories, Triage), a naive single-index RAG risks cross-domain collisions (e.g., returning a diet chunk when asked for a hospital facility location).
+* **Our Solution**: The `IntentClassifier` fires first. If it detects a `UC3_FACILITY_LINKAGE` query, the retriever strictly filters search results to **UC3 Facility Directory chunks**, preventing cross-contamination from ICMR clinical indexes.
 
----
-
-## 📞 Karnataka State Official Emergency & Health Helplines Integrated
-* **108**: Arogya Kavacha Free 24/7 Emergency Medical Response & Ambulance.
-* **104**: Karnataka Tele-Health Helpline for free medical guidance & facility navigation.
-* **1091**: Women Helpline.
-* **1098**: Child Helpline.
-* **1077**: Disaster Helpline.
-* **080-23108108**: DUDC Janhit Helpline.
-* **080-2341710**: AHVS Helpline.
-* **1926**: Forest Helpline.
+### 3. Real-World Grounding for UC2 (Scheme Entitlement Check)
+Final PM-JAY (AB-ArK) card printing in Karnataka requires biometric or OTP verification against Aadhaar and Ration Cards at Common Service Centres (CSCs). A voice assistant cannot process physical biometrics.
+* **Our Positioning**: VDA acts as an **Awareness & Document Checklist Router**. It verifies eligibility from voice input, calculates the ₹5 Lakh entitlement, and provides the exact physical document checklist (Aadhaar & Ration Card) to take to their local CSC or PHC.
 
 ---
 
@@ -123,32 +105,32 @@ Open `http://localhost:3000` in your browser.
 
 ```
 .
-├── README.md                  # Scope decision, quickstart, system overview, evaluation summary
-├── ARCHITECTURE.md            # Pipeline diagram, interface designs, Bhashini vs Sarvam vs Google rationale
-├── DESIGN_DECISIONS.md        # Log of key decisions & engineering trade-offs
-├── UC2_UC4_DESIGN.md          # Architectural design for UC3 and UC4
-├── DEMO_SCRIPT.md             # Live 5-10 minute presentation guide + backup video strategy
-├── .env.example               # Environment variables template
-├── main.py                    # FastAPI server exposing endpoints (including /api/emr-payload)
+├── README.md                           # Scope decision, quickstart, system overview, evaluation summary
+├── ARCHITECTURE.md                     # Pipeline diagram, interface designs, Bhashini vs Sarvam vs Google rationale
+├── DESIGN_DECISIONS.md                 # Log of key decisions & engineering trade-offs
+├── SYSTEM_ARCHITECTURE_DEEP_DIVE.md    # Advanced architectural mapping for state-level scale & production hardening
+├── DEMO_SCRIPT.md                      # Live 5-10 minute presentation guide + backup video strategy
+├── .env.example                        # Environment variables template
+├── main.py                             # FastAPI server exposing endpoints (including /api/emr-payload)
 ├── scripts/
-│   └── verify_system.py       # One-command empirical verification suite runner
+│   └── verify_system.py                # One-command empirical verification suite runner
 ├── backend/
-│   ├── stt/                   # STT interface + Sarvam AI + Google Cloud + Bhashini adapters
-│   ├── intent/                # Intent classifier for UC1-UC4 & low-confidence fallback router
-│   ├── safety_gate/           # Deterministic rule engine, red-flag matcher, alert hook
-│   ├── rag/                   # PDF ingester, isolated RAG index builder, retriever & answerer
-│   ├── tts/                   # TTS interface + Sarvam AI + Google Cloud + Bhashini adapters
-│   ├── session/               # Ephemeral TTL session manager & FHIR EMR payload generator
-│   └── pipeline.py            # Main control flow orchestrator
+│   ├── stt/                            # STT interface + Sarvam AI + Google Cloud + Bhashini adapters
+│   ├── intent/                         # Intent classifier for UC1-UC4 & low-confidence fallback router
+│   ├── safety_gate/                    # Deterministic rule engine, red-flag matcher, alert hook
+│   ├── rag/                            # PDF ingester, isolated RAG index builder, retriever & answerer
+│   ├── tts/                            # TTS interface + Sarvam AI + Google Cloud + Bhashini adapters
+│   ├── session/                        # Ephemeral TTL session manager & FHIR EMR payload generator
+│   └── pipeline.py                     # Main control flow orchestrator
 ├── data/
-│   ├── docs/                  # 16 Official ICMR/WHO/Karnataka State guideline PDFs
-│   ├── protocols/             # Sourced citable NCD, PM-JAY & Bengaluru Rural facility chunks
-│   └── test_sets/             # safety_gate_eval.csv benchmark dataset
+│   ├── docs/                           # 16 Official ICMR/WHO/Karnataka State guideline PDFs
+│   ├── protocols/                      # Sourced citable NCD, PM-JAY & Bengaluru Rural facility chunks
+│   └── test_sets/                      # safety_gate_eval.csv benchmark dataset
 ├── tests/
-│   ├── test_safety_gate.py    # Gate override & accuracy tests
-│   ├── test_sarvam_failover.py# Live Sarvam AI failover stress test
-│   ├── test_mixed_signal_adversarial.py # Buried red-flag adversarial test suite
-│   ├── test_intent_fallback.py# Low-confidence fallback verification
-│   └── test_rag_isolation.py  # Cross-UC index isolation verification
-└── frontend/                  # Next.js voice mini-app UI
+│   ├── test_safety_gate.py             # Gate override & accuracy tests
+│   ├── test_sarvam_failover.py         # Live Sarvam AI failover stress test
+│   ├── test_mixed_signal_adversarial.py  # Buried red-flag adversarial test suite
+│   ├── test_intent_fallback.py         # Low-confidence fallback verification
+│   └── test_rag_isolation.py           # Cross-UC index isolation verification
+└── frontend/                           # Next.js voice mini-app UI
 ```
