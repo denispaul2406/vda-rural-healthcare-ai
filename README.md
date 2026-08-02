@@ -6,14 +6,49 @@
 
 ## 🎯 100% Full 4-Use-Case Live Implementation (Medtronic Labs Brief Page 4)
 
-This submission delivers **100% full coverage across all 4 Use Cases** specified in the official Medtronic Labs Hiring Challenge brief:
+This submission delivers **100% full live coverage across all 4 Use Cases** specified in the official Medtronic Labs Hiring Challenge brief:
 
 | Use Case ID | Official Brief Title | What It Does | Live Implementation & Data Sourcing |
 | :--- | :--- | :--- | :--- |
-| **UC1** | **NCD Care Adherence** | Explains follow-up and medication schedule in plain language; daily medication reminders; 3-day follow-up alert; annual NCD screening nudge; ICMR/WHO health & diet guidance. | **LIVE & WORKING** (Sourced from 12 ICMR & WHO PDFs: ICMR-NIN 2024 Dietary Guidelines, ICMR Type 2 Diabetes Guidelines 2018, WHO HEARTS). |
-| **UC2** | **Scheme Entitlement Check** | Checks eligibility against patient's profile (Ayushman Bharat / PM-JAY ₹5 Lakh free hospital cover), walks them through enrolment, creates awareness of free HWCs diagnostics & medicines. | **LIVE & WORKING** (Sourced from NHA PM-JAY & ABDM ABHA Card Guidelines). |
-| **UC3** | **Public Health Service Linkage** | Finds a public facility (Sub-Centre, HWC, PHC, CHC, District Hospital) that provides the service the patient needs near where they are. | **LIVE & WORKING** (Ingested Bengaluru Rural District Facility Directory: Nelamangala HWC/PHC, Doddaballapura General Hospital, Hoskote CHC). |
+| **UC1** | **NCD Care Adherence** | Explains follow-up and medication schedule in plain language; daily medication reminders; 3-day follow-up alert; annual NCD screening nudge; ICMR/WHO health & diet guidance (salt <5g, 30-min walking). | **LIVE & WORKING** (Sourced from 16 ICMR & WHO PDFs: ICMR-NIN 2024 Dietary Guidelines, ICMR Type 2 Diabetes Guidelines 2018, NLEM 2022, WHO HEARTS). |
+| **UC2** | **Scheme Entitlement Check** | Checks eligibility against patient's profile (Ayushman Bharat / PM-JAY ₹5 Lakh free hospital cover), walks them through enrolment, creates awareness of free HWCs diagnostics & medicines. | **LIVE & WORKING** (Sourced from NHA PM-JAY & ABDM ABHA Card Guidelines & Karnataka SAST Helpdesk). |
+| **UC3** | **Public Health Service Linkage** | Finds a public facility (Sub-Centre, HWC, PHC, CHC, District Hospital) that provides the service the patient needs near where they are. | **LIVE & WORKING** (Sourced from Karnataka 24x7 PHC Directory & PM-JAY Empanelled Hospital Manual Karnataka for Bengaluru Rural District: Nelamangala HWC/PHC, Doddaballapura General Hospital, Hoskote CHC + State Helplines 108/104/1091/1098). |
 | **UC4** | **Teleconsultation & Triage** | Connects to existing teleconsultation portal for advice & referral; escalates red flags to a clinician via Safety Gate. | **LIVE & WORKING** (Deterministic Safety Gate with **100% Recall & Precision** + Clinician Alert Hook `notify_clinician()`). |
+
+---
+
+## 📚 Grounded Knowledge Base: 16 Official Government & WHO Guideline PDFs
+
+Our RAG index is generated from **16 official government & WHO guideline PDFs** stored in `data/docs/`:
+
+1. `PM-JAY Empanelled Hospital Manual-karnataka.pdf` (Official Karnataka PM-JAY Empanelled Hospitals)
+2. `24x7-phc-karnataka.pdf` (Official Karnataka 24x7 Primary Health Centres Directory)
+3. `National List of Essential Medicines (NLEM) 2022.pdf` (MoHFW National Essential Medicines List)
+4. `OG on Welness interventions for ABHWC_eng_Final.pdf` (Ayushman Bharat HWC Wellness Operational Guidelines)
+5. `DietaryGuidelinesforNINwebsite.pdf` (ICMR-NIN 2024 Dietary Guidelines for Indians)
+6. `ICMR_GuidelinesType2diabetes2018_0.pdf` (ICMR Type 2 Diabetes Guidelines)
+7. `WHO Guidelines on Physical Activity and Sedentary Behaviour (2020).pdf`
+8. `WHO HEARTS Technical Package – Healthy Lifestyle Counselling Module (2018).pdf`
+9. `WHO HEARTS Technical Package.pdf`
+10. `WHO HEARTS – Evidence-Based Treatment Protocols.pdf`
+11. `WHO HEARTS Healthy Lifestyle Counselling Module.pdf`
+12. `WHO HEARTS Risk-Based CVD Management.pdf`
+13. `Guidelines for NPPCF.pdf` (MoHFW Guidelines)
+14. `WHO-NMH-NVI-18.14-eng.pdf`
+15. `WHO-NMH-NVI-18.4-eng.pdf`
+16. `WHO-UCN-NCD-20.1-eng.pdf`
+
+---
+
+## 📞 Karnataka State Official Emergency & Health Helplines Integrated
+* **108**: Arogya Kavacha Free 24/7 Emergency Medical Response & Ambulance.
+* **104**: Karnataka Tele-Health Helpline for free medical guidance & facility navigation.
+* **1091**: Women Helpline.
+* **1098**: Child Helpline.
+* **1077**: Disaster Helpline.
+* **080-23108108**: DUDC Janhit Helpline.
+* **080-2341710**: AHVS Helpline.
+* **1926**: Forest Helpline.
 
 ---
 
@@ -47,7 +82,7 @@ Built for rural NCD patients on mid-range Android devices under direct outdoor s
    - **Iconography**: Clean SVG outline icons only (no emojis).
 
 2. **Inspector Mode (Developer Panel Toggle)**:
-   - Evaluator-facing panel detailing turn latency, STT transcript + language ID, intent confidence, safety gate results, 42 citable RAG chunk sources, clinician alert logs, **Simulated FHIR EMR Payload**, and active provider configuration (`Sarvam AI` / `Google` / `Bhashini`).
+   - Evaluator-facing panel detailing turn latency, STT transcript + language ID, intent confidence, safety gate results, citable RAG chunk sources, clinician alert logs, **Simulated FHIR EMR Payload**, and active provider configuration (`Sarvam AI` / `Google` / `Bhashini`).
 
 ---
 
@@ -106,7 +141,7 @@ Open `http://localhost:3000` in your browser.
 │   ├── session/               # Ephemeral TTL session manager & FHIR EMR payload generator
 │   └── pipeline.py            # Main control flow orchestrator
 ├── data/
-│   ├── docs/                  # 12 Official ICMR/WHO guideline PDFs
+│   ├── docs/                  # 16 Official ICMR/WHO/Karnataka State guideline PDFs
 │   ├── protocols/             # Sourced citable NCD, PM-JAY & Bengaluru Rural facility chunks
 │   └── test_sets/             # safety_gate_eval.csv benchmark dataset
 ├── tests/
