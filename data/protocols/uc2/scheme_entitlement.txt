@@ -1,0 +1,24 @@
+[PROTOCOL: AYUSHMAN_BHARAT_PMJAY_ENTITLEMENT]
+[Source: National Health Authority (NHA) Ayushman Bharat PM-JAY Official Operational Guidelines]
+Ayushman Bharat Pradhan Mantri Jan Arogya Yojana (PM-JAY) provides free health coverage of up to Rs 5,000,000 (5 Lakhs) per family per year for secondary and tertiary care hospitalization to over 12 crore poor and vulnerable families.
+All empanelled public hospitals and private hospitals provide cashless and paperless treatment for NCD complications (heart procedures, stroke care, diabetic complications, kidney care).
+To check eligibility:
+1. Visit your nearest Ayushman Bharat Health and Wellness Centre (HWC) or public hospital with your Ration Card or Aadhaar Card.
+2. An Ayushman Mitra at the hospital counter checks your family name in the PM-JAY database.
+3. If eligible, an Ayushman Golden Card is issued immediately at zero cost.
+
+[PROTOCOL: ABHA_HEALTH_ID_CARD_ENROLMENT]
+[Source: Ayushman Bharat Digital Mission (ABDM) Guidelines]
+ABHA (Ayushman Bharat Health Account) is a 14-digit unique health ID number for every Indian citizen.
+ABHA card enables digital storage of all medical prescriptions, lab reports, NCD screening history, and doctor visit records across public and private hospitals.
+To create an ABHA card:
+- Provide your 12-digit Aadhaar number or Mobile number to your local ASHA worker or ANM at the Sub-Centre / HWC.
+- Authentication is completed via instant mobile OTP.
+- ABHA card generation is completely free of cost.
+
+[PROTOCOL: FREE_NCD_MEDICINE_AND_SCREENING_AT_HWCS]
+[Source: MoHFW Ayushman Bharat Health and Wellness Centre (HWC) Guidelines]
+Under the National Programme for Prevention and Control of NCDs (NP-NCD):
+- Free NCD Screening: All individuals aged 30 years and above are entitled to FREE annual screening for Hypertension, Diabetes, and common cancers at their local Sub-Centre / HWC.
+- Free Essential NCD Medicines: Empanelled HWCs and Primary Health Centres (PHCs) provide FREE monthly supplies of anti-hypertensive drugs (Amlodipine, Telmisartan) and diabetes drugs (Metformin) under the National Essential Medicines List (NEML).
+- Free Diagnostic Tests: Blood Pressure measurement, Blood Glucose testing, and basic urine tests are provided free of cost to all patients.

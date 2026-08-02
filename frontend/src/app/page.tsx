@@ -362,7 +362,7 @@ export default function VDAMiniApp() {
                 className="vda-chip vda-chip-alert"
               >
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                Emergency: सीने में दर्द
+                UC4 Red-Flag: सीने में दर्द
               </button>
               <button
                 onClick={() => handleSendTurn('What time should I take my BP medicine?')}
@@ -376,14 +376,14 @@ export default function VDAMiniApp() {
                 className="vda-chip"
               >
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                UC2: Salt Intake Limit (&lt;5g/day)
+                UC1: Salt & Diet (&lt;5g/day)
               </button>
               <button
-                onClick={() => handleSendTurn('Is 30 minutes of daily morning walk good for sugar and BP?')}
+                onClick={() => handleSendTurn('Am I eligible for Ayushman Bharat PM-JAY 5 Lakh free hospital card?')}
                 className="vda-chip"
               >
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M13 4v16M17 4v16M7 4v16M3 4v16"/></svg>
-                UC2: Daily Exercise & Walking
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                UC2: Ayushman Bharat Scheme Check
               </button>
               <button
                 onClick={() => handleSendTurn('Who won the IPL cricket match yesterday?')}

@@ -4,25 +4,37 @@ from typing import Tuple
 
 logger = logging.getLogger(__name__)
 
-# Primary Intent Categories
-INTENT_UC1 = "UC1_NCD_ADHERENCE"
-INTENT_UC2 = "UC2_LIFESTYLE_COACHING"
-INTENT_UC3 = "UC3_DOCTOR_DISPATCH"
-INTENT_UC4 = "UC4_COMMUNITY_WORKFLOW"
+# Primary Intent Categories aligned 100% with official Medtronic Labs Brief
+INTENT_UC1 = "UC1_NCD_ADHERENCE"          # Medication, Follow-up, Screening Nudges, ICMR/WHO Diet Guidance
+INTENT_UC2 = "UC2_SCHEME_ENTITLEMENT"     # Ayushman Bharat, PM-JAY Eligibility, Free Treatment Awareness
+INTENT_UC3 = "UC3_FACILITY_LINKAGE"       # Nearest PHC / Sub-Centre / CHC Public Facility Linkage
+INTENT_UC4 = "UC4_TELECONSULT_TRIAGE"     # Teleconsultation Portal & Safety Gate Escalation
 INTENT_OUT_OF_SCOPE = "OUT_OF_SCOPE"
 
-# Comprehensive Intent Keywords for UC1 (Medication & Follow-Up)
+# Intent Keywords for UC1 (NCD Care Adherence & Lifestyle Protocols)
 UC1_KEYWORDS = [
     "medicine", "dawai", "dawa", "pill", "tablet", "dose", "timing", "schedule", "missed",
-    "bhool", "kab khayein", "kab lena", "checkup", "hospital", "phc", "hwc", "sub centre",
-    "doctor", "anm", "asha", "follow up", "follow-up", "prescription", "refill"
+    "bhool", "kab khayein", "kab lena", "checkup", "follow up", "follow-up", "prescription",
+    "salt", "namak", "diet", "food", "khana", "walk", "walking", "tahlna", "exercise", "screening"
 ]
 
-# Comprehensive Intent Keywords for UC2 (Lifestyle & Diet Guidance)
+# Intent Keywords for UC2 (Scheme Entitlement Check - PM-JAY & Ayushman Bharat)
 UC2_KEYWORDS = [
-    "salt", "namak", "diet", "food", "khana", "kya khayein", "kya na khayein", "rice", "chawal",
-    "walk", "walking", "tahlna", "exercise", "vyayam", "physical activity", "tobacco", "tambaku",
-    "gutka", "khaini", "bidi", "smoking", "alcohol", "sharab", "weight", "wazan", "stress", "sleep"
+    "pmjay", "pm-jay", "ayushman", "ayushman bharat", "card", "yojana", "entitlement",
+    "free treatment", "free medicine", "insurance", "bima", "eligible", "eligibility",
+    "enrolment", "register", "5 lakh", "lakh", "government scheme", "sarkari yojana"
+]
+
+# Intent Keywords for UC3 (Public Health Service Linkage)
+UC3_KEYWORDS = [
+    "hospital", "phc", "hwc", "sub centre", "sub-centre", "chc", "facility", "nearest",
+    "paas ka hospital", "kahan jayein", "location", "address", "center", "clinic"
+]
+
+# Intent Keywords for UC4 (Teleconsultation & Triage)
+UC4_KEYWORDS = [
+    "teleconsultation", "doctor call", "esanjeevani", "online doctor", "telemedicine",
+    "doctor talk", "consultation", "triage"
 ]
 
 # Out of scope topics that must be refused cleanly
@@ -34,7 +46,11 @@ OUT_OF_SCOPE_TOPICS = [
 class IntentClassifier:
     """
     Deterministic & Keyword-Weighted Intent Classifier.
-    Supports Use Case 1 (Medication & Follow-up Adherence) and Use Case 2 (Lifestyle & Diet Guidance).
+    Supports all 4 Use Cases specified in official Medtronic Labs Brief:
+      - UC1: NCD Care Adherence & Health Guidance
+      - UC2: Scheme Entitlement Check (PM-JAY / Ayushman Bharat)
+      - UC3: Public Health Facility Linkage
+      - UC4: Teleconsultation & Triage
     Enforces strict low-confidence thresholding (default 0.75).
     """
 
@@ -50,26 +66,31 @@ class IntentClassifier:
                 logger.info(f"[IntentClassifier] Explicit Out-of-Scope match: '{oos_term}' in '{text}'")
                 return (INTENT_OUT_OF_SCOPE, 0.90)
 
-        # Count keyword occurrences for UC1 vs UC2
+        # Count keyword occurrences across all 4 use cases
         uc1_score = sum(1 for k in UC1_KEYWORDS if re.search(r"\b" + re.escape(k) + r"\b", clean_text))
         uc2_score = sum(1 for k in UC2_KEYWORDS if re.search(r"\b" + re.escape(k) + r"\b", clean_text))
+        uc3_score = sum(1 for k in UC3_KEYWORDS if re.search(r"\b" + re.escape(k) + r"\b", clean_text))
+        uc4_score = sum(1 for k in UC4_KEYWORDS if re.search(r"\b" + re.escape(k) + r"\b", clean_text))
 
-        # Direct domain matching heuristics
-        if uc2_score > uc1_score:
-            confidence = min(0.75 + (uc2_score * 0.10), 0.98)
-            logger.info(f"[IntentClassifier] Text: '{text}' -> Intent: {INTENT_UC2} (Confidence: {confidence:.2f})")
-            return (INTENT_UC2, confidence)
+        scores = [
+            (INTENT_UC2, uc2_score),
+            (INTENT_UC3, uc3_score),
+            (INTENT_UC4, uc4_score),
+            (INTENT_UC1, uc1_score)
+        ]
+        best_intent, best_score = max(scores, key=lambda x: x[1])
 
-        if uc1_score > 0:
-            confidence = min(0.75 + (uc1_score * 0.10), 0.98)
-            logger.info(f"[IntentClassifier] Text: '{text}' -> Intent: {INTENT_UC1} (Confidence: {confidence:.2f})")
-            return (INTENT_UC1, confidence)
+        if best_score > 0:
+            confidence = min(0.75 + (best_score * 0.10), 0.98)
+            logger.info(f"[IntentClassifier] Text: '{text}' -> Intent: {best_intent} (Confidence: {confidence:.2f})")
+            return (best_intent, confidence)
 
         # Domain Heuristics for implicit health queries
         if any(w in clean_text for w in ["bp", "sugar", "hypertension", "diabetes", "blood pressure"]):
-            if any(w in clean_text for w in ["namak", "salt", "walk", "khana", "diet", "rice"]):
-                logger.info(f"[IntentClassifier] Implicit UC2 match for text: '{text}'")
+            if any(w in clean_text for w in ["card", "yojana", "free", "pmjay", "ayushman"]):
                 return (INTENT_UC2, 0.85)
+            if any(w in clean_text for w in ["hospital", "kahan", "near"]):
+                return (INTENT_UC3, 0.85)
             logger.info(f"[IntentClassifier] Implicit UC1 match for text: '{text}'")
             return (INTENT_UC1, 0.85)
 

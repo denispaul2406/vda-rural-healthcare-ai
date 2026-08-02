@@ -2,45 +2,54 @@ import os
 import re
 import math
 import logging
-from typing import List, Dict
+from typing import List, Dict, Any
 
 logger = logging.getLogger(__name__)
 
 def parse_protocol_file(filepath: str) -> List[Dict[str, str]]:
     """
-    Parses structured protocol text into chunks with metadata tags.
+    Parses structured protocol text into chunks with metadata tags across UC1 & UC2.
     """
-    if not os.path.exists(filepath):
-        logger.error(f"Protocol file not found: {filepath}")
-        return []
-
-    with open(filepath, "r", encoding="utf-8") as f:
-        content = f.read()
-
-    raw_chunks = content.split("[PROTOCOL:")
     chunks = []
+    
+    # Target files: data/protocols/uc1/ncd_guidelines.txt and data/protocols/uc2/scheme_entitlement.txt
+    protocol_dir = os.path.dirname(os.path.dirname(os.path.dirname(filepath)))
+    target_files = [
+        os.path.join(protocol_dir, "data", "protocols", "uc1", "ncd_guidelines.txt"),
+        os.path.join(protocol_dir, "data", "protocols", "uc2", "scheme_entitlement.txt")
+    ]
 
-    for idx, raw_chunk in enumerate(raw_chunks):
-        if not raw_chunk.strip():
+    for target_path in target_files:
+        if not os.path.exists(target_path):
             continue
-        lines = raw_chunk.strip().split("\n")
-        header = lines[0].replace("]", "").strip()
-        body = "\n".join(lines[1:]).strip()
 
-        chunk_record = {
-            "chunk_id": f"uc1_chunk_{idx}",
-            "header": header,
-            "text": body,
-            "use_case": "UC1"
-        }
-        chunks.append(chunk_record)
+        with open(target_path, "r", encoding="utf-8") as f:
+            content = f.read()
 
-    logger.info(f"[IndexBuilder] Parsed {len(chunks)} protocol chunks for UC1 RAG index.")
+        raw_chunks = content.split("[PROTOCOL:")
+        for idx, raw_chunk in enumerate(raw_chunks):
+            if not raw_chunk.strip():
+                continue
+            lines = raw_chunk.strip().split("\n")
+            header = lines[0].replace("]", "").strip()
+            body = "\n".join(lines[1:]).strip()
+
+            use_case = "UC2" if "scheme" in target_path.lower() or "pmjay" in header.lower() or "abha" in header.lower() else "UC1"
+
+            chunk_record = {
+                "chunk_id": f"{use_case.lower()}_chunk_{len(chunks)}",
+                "header": header,
+                "text": body,
+                "use_case": use_case
+            }
+            chunks.append(chunk_record)
+
+    logger.info(f"[IndexBuilder] Parsed {len(chunks)} protocol chunks for RAG index.")
     return chunks
 
 class SimpleTFIDFIndex:
     """
-    Lightweight, self-contained Vector Index for UC1 Protocol Retrieval.
+    Lightweight, self-contained Vector Index for UC1 & UC2 Protocol Retrieval.
     No heavy external C dependencies needed; guarantees 100% reliable local execution on any machine.
     """
 
