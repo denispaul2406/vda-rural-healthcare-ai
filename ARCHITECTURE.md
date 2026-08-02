@@ -13,7 +13,7 @@
                      ▼
 ┌─────────────────────────────────────────┐
 │ 2. Intent Classification                │  Interface: IntentClassifier.classify(text) -> (intent, confidence)
-└────────────────────┬────────────────────┘  Supported: UC1 (Adherence), UC2 (Lifestyle & Diet), Out-of-Scope
+└────────────────────┬────────────────────┘  Supported: UC1 (Adherence), UC2 (Scheme Check), UC3 (Facility Linkage), UC4 (Triage)
                      │                       Rule: If confidence < 0.75 -> Fixed Fallback, STOP
                      ▼
 ┌─────────────────────────────────────────┐
@@ -25,7 +25,7 @@
                      ▼
 ┌─────────────────────────────────────────┐
 │ 4. Grounded RAG + Agent                 │  Interface: Answerer.answer(text, retrieved_context) -> answer_text
-└────────────────────┬────────────────────┘  Index Isolation: 42 Citable Chunks from 12 ICMR/WHO PDFs
+└────────────────────┬────────────────────┘  Index Isolation: 49 Citable Chunks from 16 ICMR/WHO/State PDFs
                      │
                      ▼
 ┌─────────────────────────────────────────┐
@@ -77,23 +77,30 @@ class SafetyGate:
 
 ---
 
-## 4. Multi-Document RAG Knowledge Base Architecture
+## 4. Multi-Document RAG Knowledge Base & Sourced PDF Specifications
 
-The RAG Knowledge Base is built by parsing and indexing **12 official government & WHO guideline PDFs** stored in `data/docs/`:
-1. `DietaryGuidelinesforNINwebsite.pdf` (ICMR-NIN 2024 Dietary Guidelines for Indians)
-2. `ICMR_GuidelinesType2diabetes2018_0.pdf` (ICMR Type 2 Diabetes Guidelines)
-3. `WHO Guidelines on Physical Activity and Sedentary Behaviour (2020).pdf`
-4. `WHO HEARTS Technical Package – Healthy Lifestyle Counselling Module (2018).pdf`
-5. `WHO HEARTS Technical Package.pdf`
-6. `WHO HEARTS – Evidence-Based Treatment Protocols.pdf`
-7. `WHO HEARTS Healthy Lifestyle Counselling Module.pdf`
-8. `WHO HEARTS Risk-Based CVD Management.pdf`
-9. `Guidelines for NPPCF.pdf` (MoHFW Guidelines)
-10. `WHO-NMH-NVI-18.14-eng.pdf`
-11. `WHO-NMH-NVI-18.4-eng.pdf`
-12. `WHO-UCN-NCD-20.1-eng.pdf`
+The RAG Knowledge Base is built by parsing and indexing **16 official government & WHO guideline PDFs** stored in `data/docs/`:
 
-Every retrieved chunk includes source attribution metadata (`[Source: ICMR-NIN 2024 Dietary Guidelines]`, `[Source: WHO HEARTS Technical Package, p. 12]`), allowing evaluators to verify the clinical grounding of generated answers.
+| # | File Name | Document Authority & Content Summary |
+| :---: | :--- | :--- |
+| 1 | `PM-JAY Empanelled Hospital Manual-karnataka.pdf` | **National Health Authority / SAST Karnataka**: Official directory of PM-JAY empanelled public & private hospitals in Karnataka offering cashless secondary/tertiary care for NCD complications. |
+| 2 | `24x7-phc-karnataka.pdf` | **Department of Health & Family Welfare, Govt of Karnataka**: Official directory of 24/7 Primary Health Centres (PHCs) and Community Health Centres (CHCs) across Karnataka districts. |
+| 3 | `National List of Essential Medicines (NLEM) 2022.pdf` | **Ministry of Health & Family Welfare (MoHFW), Govt of India**: Specifies free essential NCD drugs (Amlodipine, Telmisartan, Metformin, Insulin) mandated for free distribution at Sub-Centres, HWCs, and PHCs. |
+| 4 | `OG on Welness interventions for ABHWC_eng_Final.pdf` | **MoHFW Ayushman Bharat HWC Division**: Operational guidelines for wellness interventions, yoga, and annual NCD screening protocols at Health and Wellness Centres. |
+| 5 | `DietaryGuidelinesforNINwebsite.pdf` | **ICMR - National Institute of Nutrition (NIN 2024)**: Flagship dietary guidelines for Indians detailing salt reduction (<5g/day), coarse millets (ragi, bajra, jowar), and oil limits. |
+| 6 | `ICMR_GuidelinesType2diabetes2018_0.pdf` | **Indian Council of Medical Research (ICMR)**: Clinical guidelines for screening, diagnosis, monitoring, and medication schedule for Type 2 Diabetes Mellitus. |
+| 7 | `WHO Guidelines on Physical Activity and Sedentary Behaviour (2020).pdf` | **World Health Organization**: Global recommendations for physical activity (150–300 mins/week moderate exercise) for adults living with chronic NCDs. |
+| 8 | `WHO HEARTS Technical Package – Healthy Lifestyle Counselling Module (2018).pdf` | **World Health Organization**: Brief counseling protocols for salt reduction, tobacco cessation, alcohol avoidance, and physical activity in primary care. |
+| 9 | `WHO HEARTS Technical Package.pdf` | **World Health Organization**: Global operational framework for cardiovascular disease management in primary health care settings. |
+| 10 | `WHO HEARTS – Evidence-Based Treatment Protocols.pdf` | **World Health Organization**: Standardized step-by-step clinical treatment algorithms for hypertension and diabetes management. |
+| 11 | `WHO HEARTS Healthy Lifestyle Counselling Module.pdf` | **World Health Organization**: Patient-facing lifestyle counseling tools for primary healthcare workers. |
+| 12 | `WHO HEARTS Risk-Based CVD Management.pdf` | **World Health Organization**: Risk-stratification protocols and referral algorithms for cardiovascular disease prevention. |
+| 13 | `Guidelines for NPPCF.pdf` | **MoHFW National Programme Guidelines**: Operational guidelines for prevention, screening, and control of chronic non-communicable health conditions. |
+| 14 | `WHO-NMH-NVI-18.14-eng.pdf` | **World Health Organization**: Technical guidance on integrated NCD care delivery in primary healthcare systems. |
+| 15 | `WHO-NMH-NVI-18.4-eng.pdf` | **World Health Organization**: Guidelines on team-based care and task-sharing among non-physician healthcare workers (ANMs/ASHAs). |
+| 16 | `WHO-UCN-NCD-20.1-eng.pdf` | **World Health Organization**: Global guidelines on diagnosis and management of Type 2 Diabetes in low-resource primary care settings. |
+
+Every retrieved chunk includes source attribution metadata (`[Source: ICMR-NIN 2024 Dietary Guidelines]`, `[Source: WHO HEARTS Technical Package, p. 12]`, `[Source: Karnataka 24x7 PHC Directory]`), allowing evaluators to verify the clinical grounding of generated answers.
 
 ---
 
