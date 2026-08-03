@@ -19,8 +19,7 @@ class GoogleTextToSpeech(TextToSpeech):
             cred_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
             if cred_path and os.path.exists(cred_path):
                 abs_path = os.path.abspath(cred_path)
-                credentials = service_account.Credentials.from_service_account_file(abs_path)
-                self.client = texttospeech.TextToSpeechClient(credentials=credentials)
+                self.client = texttospeech.TextToSpeechClient.from_service_account_file(abs_path)
                 logger.info(f"[GoogleTTS] Initialized Google TextToSpeechClient with service account: {abs_path}")
             else:
                 self.client = texttospeech.TextToSpeechClient()

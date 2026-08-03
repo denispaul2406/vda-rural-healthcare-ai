@@ -19,8 +19,7 @@ class GoogleSpeechToText(SpeechToText):
             cred_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
             if cred_path and os.path.exists(cred_path):
                 abs_path = os.path.abspath(cred_path)
-                credentials = service_account.Credentials.from_service_account_file(abs_path)
-                self.client = speech.SpeechClient(credentials=credentials)
+                self.client = speech.SpeechClient.from_service_account_file(abs_path)
                 logger.info(f"[GoogleSTT] Initialized Google SpeechClient with service account: {abs_path}")
             else:
                 self.client = speech.SpeechClient()
