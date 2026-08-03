@@ -12,17 +12,23 @@ def parse_protocol_file(filepath: str) -> List[Dict[str, str]]:
     """
     chunks = []
     
-    # Target protocol files for UC1, UC2, and UC3
-    protocol_dir = os.path.dirname(os.path.dirname(os.path.dirname(filepath)))
-    target_files = [
-        os.path.join(protocol_dir, "data", "protocols", "uc1", "ncd_guidelines.txt"),
-        os.path.join(protocol_dir, "data", "protocols", "uc2", "scheme_entitlement.txt"),
-        os.path.join(protocol_dir, "data", "protocols", "uc3", "bengaluru_rural_facilities.txt")
+    base_dir = os.getcwd()
+    possible_paths = [
+        os.path.join(base_dir, "data", "protocols", "uc1", "ncd_guidelines.txt"),
+        os.path.join(base_dir, "data", "protocols", "uc2", "scheme_entitlement.txt"),
+        os.path.join(base_dir, "data", "protocols", "uc3", "bengaluru_rural_facilities.txt"),
+        os.path.join("data", "protocols", "uc1", "ncd_guidelines.txt"),
+        os.path.join("data", "protocols", "uc2", "scheme_entitlement.txt"),
+        os.path.join("data", "protocols", "uc3", "bengaluru_rural_facilities.txt"),
+        filepath
     ]
 
-    for target_path in target_files:
-        if not os.path.exists(target_path):
+    processed_paths = set()
+    for target_path in possible_paths:
+        abs_target = os.path.abspath(target_path)
+        if abs_target in processed_paths or not os.path.exists(target_path):
             continue
+        processed_paths.add(abs_target)
 
         with open(target_path, "r", encoding="utf-8") as f:
             content = f.read()
