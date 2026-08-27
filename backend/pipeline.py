@@ -45,6 +45,7 @@ class VDAPipeline:
         session_id: str,
         audio_bytes: Optional[bytes] = None,
         text_input: Optional[str] = None,
+        language: Optional[str] = None,
         mime_type: str = "audio/wav"
     ) -> Dict[str, Any]:
         """
@@ -58,10 +59,17 @@ class VDAPipeline:
         # -------------------------------------------------------------
         if text_input and text_input.strip():
             transcript = text_input.strip()
-            lang_code = "hi-IN" if any(ord(c) > 127 for c in transcript) or "mujhe" in transcript.lower() or "dard" in transcript.lower() else "en-IN"
-            pipeline_log.append(f"[STAGE 1] Direct Text Input Provided: '{transcript}' ({lang_code})")
+            # If Devanagari or explicit Hindi terms present, enforce hi-IN; else respect language toggle / en-IN
+            if any(ord(c) > 127 for c in transcript) or any(w in transcript.lower() for w in ["mujhe", "dard", "dawai", "kahan", "hai", "kaise", "namak", "yojana"]):
+                lang_code = "hi-IN"
+            elif language and language.strip():
+                lang_code = language.strip()
+            else:
+                lang_code = "en-IN"
+            pipeline_log.append(f"[STAGE 1] Direct Text Input Provided: '{transcript}' (Language: {lang_code})")
         elif audio_bytes:
-            transcript, lang_code = self.stt_provider.transcribe(audio_bytes, mime_type)
+            transcript, detected_lang = self.stt_provider.transcribe(audio_bytes, mime_type)
+            lang_code = language if (language and language.strip()) else detected_lang
             pipeline_log.append(f"[STAGE 1] STT Transcribed: '{transcript}' (Language: {lang_code})")
         else:
             return {"error": "No audio bytes or text input provided."}
@@ -177,7 +185,7 @@ class VDAPipeline:
             response_text = f"🩺 [Direct Clinician Call Takeover by {clinician_name}]: {clinician_note}. {response_text}"
             source_ids.append(f"HUMAN_CLINICIAN_TAKEOVER ({clinician_name})")
 
-        pipeline_log.append(f"[STAGE 4] Generated RAG Response. Sources: {source_ids}")
+        pipeline_log.append(f"[STAGE 4] Generated RAG Response ({lang_code}). Sources: {source_ids}")
 
         # -------------------------------------------------------------
         # STAGE 5: TTS Speech Synthesis
@@ -206,6 +214,6 @@ class VDAPipeline:
 
         # -------------------------------------------------------------
         # STAGE 6: Update Ephemeral Session Store
-        # --------------------------------00-----------------------------
+        # -------------------------------------------------------------
         session_store.add_turn(session_id, turn_result)
         return turn_result

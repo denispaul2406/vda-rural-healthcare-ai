@@ -98,7 +98,8 @@ export default function VDAMiniApp() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           session_id: sessionId,
-          text: textToSend
+          text: textToSend,
+          language: activeLang
         })
       });
 

@@ -35,6 +35,7 @@ class VoiceTurnRequest(BaseModel):
     session_id: str
     audio_b64: Optional[str] = None
     text: Optional[str] = None
+    language: Optional[str] = None
 
 class TakeoverRequest(BaseModel):
     session_id: str
@@ -64,6 +65,7 @@ def health_check():
 async def voice_turn_multipart(
     session_id: str = Form(...),
     text: Optional[str] = Form(None),
+    language: Optional[str] = Form(None),
     audio: Optional[UploadFile] = File(None)
 ):
     try:
@@ -74,6 +76,7 @@ async def voice_turn_multipart(
             session_id=session_id,
             audio_bytes=audio_bytes,
             text_input=text,
+            language=language,
             mime_type=mime_type
         )
         return result
@@ -91,7 +94,8 @@ def voice_turn_json(req: VoiceTurnRequest):
         result = pipeline.process_turn(
             session_id=req.session_id,
             audio_bytes=audio_bytes,
-            text_input=req.text
+            text_input=req.text,
+            language=req.language
         )
         return result
     except Exception as e:
@@ -109,7 +113,7 @@ def takeover_call(req: TakeoverRequest):
         "status": "success",
         "message": f"Clinician '{req.clinician_name}' successfully took over session '{req.session_id}'.",
         "takeover": record
-    }
+      }
 
 @app.get("/api/emr-payload/{session_id}")
 def get_fhir_emr_payload(session_id: str):
