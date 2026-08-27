@@ -13,34 +13,36 @@ INTENT_OUT_OF_SCOPE = "OUT_OF_SCOPE"
 
 # Intent Keywords for UC1 (NCD Care Adherence & Lifestyle Protocols)
 UC1_KEYWORDS = [
-    "medicine", "dawai", "dawa", "pill", "tablet", "dose", "timing", "schedule", "missed",
-    "bhool", "kab khayein", "kab lena", "checkup", "follow up", "follow-up", "prescription",
-    "salt", "namak", "diet", "food", "khana", "walk", "walking", "tahlna", "exercise", "screening"
+    "medicine", "medicines", "dawai", "dawa", "pill", "pills", "tablet", "tablets", "dose", "timing",
+    "schedule", "missed", "bhool", "kab khayein", "kab lena", "checkup", "follow up", "follow-up",
+    "prescription", "salt", "namak", "diet", "food", "khana", "walk", "walking", "tahlna", "exercise",
+    "screening", "blood pressure", "bp", "hypertension", "sugar", "diabetes", "goli"
 ]
 
 # Intent Keywords for UC2 (Scheme Entitlement Check - PM-JAY & Ayushman Bharat)
 UC2_KEYWORDS = [
     "pmjay", "pm-jay", "ayushman", "ayushman bharat", "card", "yojana", "entitlement",
     "free treatment", "free medicine", "insurance", "bima", "eligible", "eligibility",
-    "enrolment", "register", "5 lakh", "lakh", "government scheme", "sarkari yojana"
+    "enrolment", "register", "5 lakh", "lakh", "government scheme", "sarkari yojana", "golden card"
 ]
 
 # Intent Keywords for UC3 (Public Health Service Linkage)
 UC3_KEYWORDS = [
-    "hospital", "phc", "hwc", "sub centre", "sub-centre", "chc", "facility", "nearest",
-    "paas ka hospital", "kahan jayein", "location", "address", "center", "clinic"
+    "hospital", "hospitals", "phc", "hwc", "sub centre", "sub-centre", "chc", "facility", "nearest",
+    "paas ka hospital", "kahan jayein", "location", "address", "center", "clinic", "doddaballapura",
+    "nelamangala", "hoskote", "bengaluru", "where is", "where"
 ]
 
 # Intent Keywords for UC4 (Teleconsultation & Triage)
 UC4_KEYWORDS = [
     "teleconsultation", "doctor call", "esanjeevani", "online doctor", "telemedicine",
-    "doctor talk", "consultation", "triage"
+    "doctor talk", "consultation", "triage", "doctor"
 ]
 
 # Out of scope topics that must be refused cleanly
 OUT_OF_SCOPE_TOPICS = [
     "weather", "mausam", "cricket", "ipl", "match", "score", "movie", "cinema", "song",
-    "politician", "election", "vote", "recipe", "biryani", "car", "bike", "stock", "crypto"
+    "politician", "election", "vote", "recipe", "biryani", "car", "motorbike", "engine", "stock", "crypto"
 ]
 
 class IntentClassifier:
@@ -86,10 +88,10 @@ class IntentClassifier:
             return (best_intent, confidence)
 
         # Domain Heuristics for implicit health queries
-        if any(w in clean_text for w in ["bp", "sugar", "hypertension", "diabetes", "blood pressure"]):
-            if any(w in clean_text for w in ["card", "yojana", "free", "pmjay", "ayushman"]):
+        if any(w in clean_text for w in ["bp", "sugar", "hypertension", "diabetes", "blood pressure", "medicine", "dawai"]):
+            if any(w in clean_text for w in ["card", "yojana", "free", "pmjay", "ayushman", "scheme", "5 lakh"]):
                 return (INTENT_UC2, 0.85)
-            if any(w in clean_text for w in ["hospital", "kahan", "near"]):
+            if any(w in clean_text for w in ["hospital", "phc", "hwc", "kahan", "near", "where", "location"]):
                 return (INTENT_UC3, 0.85)
             logger.info(f"[IntentClassifier] Implicit UC1 match for text: '{text}'")
             return (INTENT_UC1, 0.85)

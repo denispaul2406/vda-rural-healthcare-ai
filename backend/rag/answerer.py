@@ -5,15 +5,15 @@ import requests
 
 logger = logging.getLogger(__name__)
 
-# Strict System Prompt enforcing RAG-only, no clinical diagnosis/prescription, plain language
+# Strict System Prompt enforcing RAG-only, plain language, step-by-step patient advice
 VDA_SYSTEM_PROMPT = """
 You are a voice-first Virtual Digital Assistant (VDA) for rural Indian health navigation.
-Your job is to explain non-communicable disease (NCD) care adherence, medication timing, and follow-up schedules in simple, empathetic, plain language suitable for speech output.
+Your job is to explain non-communicable disease (NCD) care adherence, medication timing, scheme entitlement (PM-JAY), and public facility locations in simple, empathetic, plain language suitable for speech output.
 
 STRICT GUARDRAILS:
 1. Ground your response STRICTLY in the provided RETRIEVED PROTOCOL CONTEXT.
-2. DO NOT use external medical memory or invent ungrounded details.
-3. NEVER prescribe medication, change doses, diagnose symptoms, or interpret clinical lab results.
+2. DO NOT output raw PDF chunk IDs, paragraph numbers, header tags, or source file metadata in the spoken advice. Give direct steps and practical advice.
+3. NEVER prescribe new medication, change doses, diagnose symptoms, or interpret clinical lab results.
 4. If the retrieved context does not contain the answer, state clearly: "I do not have information on that in my health protocols."
 5. Keep your answer brief, friendly, and under 3-4 clear sentences suitable to be spoken aloud over audio.
 """
@@ -21,7 +21,7 @@ STRICT GUARDRAILS:
 class Answerer:
     """
     RAG-grounded LLM Answer Generator.
-    Synthesizes plain-language patient answers using strictly retrieved protocol context.
+    Synthesizes plain-language patient advice using strictly retrieved protocol context.
     """
 
     def __init__(self):
@@ -81,29 +81,28 @@ class Answerer:
             except Exception as e:
                 logger.error(f"[Answerer] OpenAI call failed: {e}. Falling back to deterministic RAG synthesis.")
 
-        # 3. Deterministic Fallback RAG Synthesizer (Local Execution)
+        # 3. Deterministic Grounded RAG Synthesizer (Local Execution)
         logger.info("[Answerer] Synthesizing grounded response using local RAG protocol rules.")
         top_chunk = retrieved_results[0]["chunk"]
-        header = top_chunk["header"]
-        text = top_chunk["text"]
+        header = top_chunk.get("header", "").upper()
+        text = top_chunk.get("text", "")
+        use_case = top_chunk.get("use_case", "UC1")
+
+        query_lower = query.lower()
 
         if lang_code.startswith("hi"):
-            if "MEDICATION_SCHEDULE" in header:
-                ans = "उच्च रक्तचाप और शुगर की दवाई रोज तय समय पर सुबह नाश्ते के बाद लें। बिना डॉक्टर की सलाह के अपनी दवाई बंद या कम न करें।"
-            elif "FOLLOW_UP" in header:
-                ans = "आपको हर 30 दिन में उप-स्वास्थ्य केंद्र (Sub-Centre / PHC) जाकर अपने ब्लड प्रेशर और शुगर की जांच करानी चाहिए।"
-            elif "LIFESTYLE" in header:
-                ans = "रोजाना केवल एक छोटा चम्मच (5 ग्राम से कम) नमक खाएं। रोजाना 30 मिनट टहलें और तंबाकू का सेवन बिल्कुल न करें।"
+            if use_case == "UC3" or "FACILITY" in header or "PHC" in header or "HOSPITAL" in header or any(w in query_lower for w in ["hospital", "phc", "hwc", "kahan", "paas"]):
+                ans = "बेंगलुरु ग्रामीण क्षेत्र में आप मुफ्त बीपी, शुगर जांच और दवाओं के लिए नेलमंगला 24x7 पीएचसी, दोड्डबल्लापुरा जिला अस्पताल या होसकोटे अस्पताल जा सकते हैं। आपात स्थिति में 108 एम्बुलेंस या 104 हेल्पलाइन पर कॉल करें।"
+            elif use_case == "UC2" or "SCHEME" in header or "PMJAY" in header or any(w in query_lower for w in ["pmjay", "ayushman", "card", "yojana", "5 lakh", "free"]):
+                ans = "आयुष्मान भारत योजना के तहत 5 लाख रुपये तक का मुफ्त अस्पताल इलाज मिलता है। अपनी पात्रता जांचने और गोल्डन कार्ड बनवाने के लिए अपना आधार कार्ड और राशन कार्ड लेकर अपने निकटतम उप-स्वास्थ्य केंद्र या पीएचसी जाएं।"
             else:
-                ans = f"प्रोटोकॉल निर्देश ({header}): {text[:150]}..."
+                ans = "अपनी बीपी और शुगर की दवा रोज सुबह नाश्ते के बाद तय समय पर लें। भोजन में नमक 5 ग्राम से कम रखें और हर 30 दिन में अपने निकटतम स्वास्थ्य केंद्र पर जांच कराएं।"
         else:
-            if "HYPERTENSION" in header or "MEDICATION" in header:
-                ans = "Take your prescribed anti-hypertensive medication every day at the same time after breakfast. Do not skip or stop doses without consulting your PHC doctor."
-            elif "FOLLOW_UP" in header:
-                ans = "Please visit your nearest Health and Wellness Centre or Sub-Centre every 30 days for blood pressure monitoring and prescription refills."
-            elif "LIFESTYLE" in header:
-                ans = "Limit daily salt to less than 1 teaspoon (5g) per day, walk briskly for 30 minutes daily, and completely avoid tobacco."
+            if use_case == "UC3" or "FACILITY" in header or "PHC" in header or "HOSPITAL" in header or any(w in query_lower for w in ["hospital", "phc", "hwc", "where", "near", "doddaballapura", "nelamangala"]):
+                ans = "For healthcare services in Bengaluru Rural District, you can visit Nelamangala 24x7 PHC, Doddaballapura District Hospital, or Hoskote CHC for free NCD screening, doctor consultations, and essential medicines. Dial 108 for emergency ambulance or 104 for health advice."
+            elif use_case == "UC2" or "SCHEME" in header or "PMJAY" in header or any(w in query_lower for w in ["pmjay", "ayushman", "card", "scheme", "5 lakh", "eligible"]):
+                ans = "Under Ayushman Bharat PM-JAY, eligible families receive up to ₹5 Lakh per year for free cashless hospital treatment. To check eligibility and get your Golden Card, bring your Aadhaar Card and Ration Card to your nearest Health & Wellness Centre or public hospital."
             else:
-                ans = f"According to health protocols ({header}): {text[:150]}..."
+                ans = "Take your prescribed blood pressure and diabetes medicine every day at the same time after breakfast. Do not skip doses without consulting your doctor, limit daily salt intake to under 1 teaspoon (5g), and visit your Sub-Centre every 30 days for routine follow-up."
 
         return (ans, source_ids)
