@@ -35,7 +35,7 @@ class SarvamTextToSpeech(TextToSpeech):
             payload = {
                 "inputs": [text[:500]], # Max length safety cap
                 "target_language_code": target_lang,
-                "speaker": "meera",
+                "speaker": "anushka",
                 "pitch": 0,
                 "pace": 1.0,
                 "loudness": 1.5,
