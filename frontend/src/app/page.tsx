@@ -109,12 +109,19 @@ export default function VDAMiniApp() {
         try {
           const audio = new Audio(`data:audio/wav;base64,${data.audio_b64}`);
           audio.play().catch(() => {
-            console.log('Autoplay blocked by browser. User can click Listen to Voice button.');
+            console.log('Autoplay blocked. Executing browser speech synthesis fallback...');
+            if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+              window.speechSynthesis.cancel();
+              const synthUtterance = new SpeechSynthesisUtterance(data.response_text);
+              synthUtterance.lang = activeLang;
+              window.speechSynthesis.speak(synthUtterance);
+            }
           });
         } catch (e) {
           console.error('Audio init error:', e);
         }
       } else if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
         const synthUtterance = new SpeechSynthesisUtterance(data.response_text);
         synthUtterance.lang = activeLang;
         window.speechSynthesis.speak(synthUtterance);

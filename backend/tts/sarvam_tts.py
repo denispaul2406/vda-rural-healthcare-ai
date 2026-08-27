@@ -39,9 +39,9 @@ class SarvamTextToSpeech(TextToSpeech):
                 "pitch": 0,
                 "pace": 1.0,
                 "loudness": 1.5,
-                "speech_sample_rate": 8000,
+                "speech_sample_rate": 16000,
                 "enable_preprocessing": True,
-                "model": "bulbul:v1"
+                "model": "bulbul:v2"
             }
 
             response = requests.post(self.endpoint, headers=headers, json=payload, timeout=12)
