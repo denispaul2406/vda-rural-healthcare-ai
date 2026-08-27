@@ -34,8 +34,10 @@ export default function VDAMiniApp() {
 
   // Clinician Human-in-the-Loop Takeover State
   const [takeoverClinician, setTakeoverClinician] = useState<string>('Dr. Sharma (Medical Officer)');
-  const [takeoverNote, setTakeoverNote] = useState<string>('Patient advised to lie flat immediately. 108 Ambulance dispatched. ASHA Worker Sunita notified.');
+  const [takeoverNotesMap, setTakeoverNotesMap] = useState<Record<string, string>>({});
   const [takeoverStatusMsg, setTakeoverStatusMsg] = useState<string | null>(null);
+  const [filterStatus, setFilterStatus] = useState<'all' | 'pending' | 'taken_over'>('all');
+  const [playingAudioId, setPlayingAudioId] = useState<string | null>(null);
 
   const recognitionRef = useRef<unknown>(null);
 
@@ -131,7 +133,8 @@ export default function VDAMiniApp() {
     }
   };
 
-  const handleTakeoverCall = async (targetSession: string) => {
+  const handleTakeoverCall = async (targetSession: string, customNote?: string) => {
+    const noteToUse = customNote || takeoverNotesMap[targetSession] || 'Patient advised to lie flat immediately. 108 Ambulance dispatched. ASHA Worker Sunita notified.';
     try {
       setTakeoverStatusMsg('Processing Call Overtake Directive...');
       const res = await fetch(`${API_BASE}/api/alerts/takeover`, {
@@ -140,11 +143,12 @@ export default function VDAMiniApp() {
         body: JSON.stringify({
           session_id: targetSession,
           clinician_name: takeoverClinician,
-          clinician_note: takeoverNote
+          clinician_note: noteToUse
         })
       });
       const data = await res.json();
-      setTakeoverStatusMsg(`✅ TAKEOVER ACTIVE: ${data.message}`);
+      const msgText = data?.message || (data?.takeover?.clinician_name ? `Clinician '${data.takeover.clinician_name}' successfully took over session '${targetSession}'.` : 'Call takeover active');
+      setTakeoverStatusMsg(`✅ TAKEOVER ACTIVE: ${msgText}`);
       fetchAlertsAndFhir();
     } catch (e) {
       console.error('Error taking over call:', e);
@@ -163,8 +167,24 @@ export default function VDAMiniApp() {
     }
   };
 
+  const setNoteForSession = (sessId: string, noteStr: string) => {
+    setTakeoverNotesMap(prev => ({ ...prev, [sessId]: noteStr }));
+  };
+
+  const simulatePlayAudio = (alertId: string) => {
+    setPlayingAudioId(alertId);
+    setTimeout(() => setPlayingAudioId(null), 3000);
+  };
+
+  const filteredAlerts = alerts.filter(al => {
+    const alertObj = al as any;
+    if (filterStatus === 'pending') return alertObj.status !== 'CLINICIAN_TAKEOVER_ACTIVE';
+    if (filterStatus === 'taken_over') return alertObj.status === 'CLINICIAN_TAKEOVER_ACTIVE';
+    return true;
+  });
+
   return (
-    <main style={{ maxWidth: '960px', margin: '0 auto', padding: '36px 20px 80px 20px' }}>
+    <main style={{ maxWidth: '1020px', margin: '0 auto', padding: '36px 20px 80px 20px' }}>
 
       {/* Top Navbar Header */}
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '36px' }}>
@@ -469,119 +489,252 @@ export default function VDAMiniApp() {
       {mode === 'clinician' && (
         <div style={{ background: '#0f172a', border: '1px solid #1e293b', borderRadius: '16px', padding: '28px', color: '#f8fafc' }}>
 
+          {/* Clinician Console Top Header Bar */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', paddingBottom: '16px', borderBottom: '1px solid #334155' }}>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <span style={{ fontSize: '20px' }}>🩺</span>
+                <span style={{ fontSize: '22px' }}>🩺</span>
                 <h3 style={{ fontSize: '18px', color: '#f87171', fontWeight: 800 }}>
                   CLINICIAN TRIAGE & EMERGENCY CONTROL DASHBOARD
                 </h3>
               </div>
               <p style={{ fontSize: '12px', color: '#94a3b8', marginTop: '4px' }}>
-                Human-in-the-Loop Ambulatory Care Engine • Live Red-Flag Escalation & Call Takeover Protocol
+                Human-in-the-Loop Ambulatory Care System • Real-Time Safety Gate Monitoring & Call Overtake
               </p>
             </div>
-            <button
-              onClick={fetchAlertsAndFhir}
-              style={{ padding: '8px 14px', background: '#1e293b', border: '1px solid #475569', color: '#e2e8f0', borderRadius: '8px', cursor: 'pointer', fontSize: '12px', fontWeight: 600 }}
-            >
-              🔄 Refresh Live Alerts
-            </button>
+
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+              <input
+                type="text"
+                value={takeoverClinician}
+                onChange={(e) => setTakeoverClinician(e.target.value)}
+                placeholder="Clinician Name"
+                style={{ padding: '6px 10px', borderRadius: '6px', background: '#1e293b', border: '1px solid #475569', color: '#f8fafc', fontSize: '12px', width: '180px' }}
+              />
+              <button
+                onClick={fetchAlertsAndFhir}
+                style={{ padding: '8px 14px', background: '#1e293b', border: '1px solid #475569', color: '#e2e8f0', borderRadius: '8px', cursor: 'pointer', fontSize: '12px', fontWeight: 600 }}
+              >
+                🔄 Refresh Stream
+              </button>
+            </div>
           </div>
 
+          {/* Quick Metrics Bar */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '14px', marginBottom: '24px' }}>
+            <div style={{ background: '#1e293b', border: '1px solid #334155', borderRadius: '10px', padding: '14px' }}>
+              <div style={{ fontSize: '11px', color: '#94a3b8', textTransform: 'uppercase' }}>Total Red-Flag Escalations</div>
+              <div style={{ fontSize: '22px', fontWeight: 800, color: '#f87171', marginTop: '4px' }}>{alerts.length}</div>
+            </div>
+            <div style={{ background: '#1e293b', border: '1px solid #334155', borderRadius: '10px', padding: '14px' }}>
+              <div style={{ fontSize: '11px', color: '#94a3b8', textTransform: 'uppercase' }}>Active Clinician Overrides</div>
+              <div style={{ fontSize: '22px', fontWeight: 800, color: '#34d399', marginTop: '4px' }}>
+                {alerts.filter((a: any) => a.status === 'CLINICIAN_TAKEOVER_ACTIVE').length}
+              </div>
+            </div>
+            <div style={{ background: '#1e293b', border: '1px solid #334155', borderRadius: '10px', padding: '14px' }}>
+              <div style={{ fontSize: '11px', color: '#94a3b8', textTransform: 'uppercase' }}>Triage Response SLA</div>
+              <div style={{ fontSize: '22px', fontWeight: 800, color: '#38bdf8', marginTop: '4px' }}>&lt; 5s (Instant)</div>
+            </div>
+          </div>
+
+          {/* Status Message Notification Banner */}
           {takeoverStatusMsg && (
             <div style={{ background: '#064e3b', border: '1px solid #10b981', color: '#6ee7b7', padding: '12px 16px', borderRadius: '8px', fontSize: '13px', fontWeight: 600, marginBottom: '20px' }}>
               {takeoverStatusMsg}
             </div>
           )}
 
-          {/* Active Red-Flag Alerts Stream */}
-          <div style={{ marginBottom: '32px' }}>
-            <h4 style={{ fontSize: '14px', color: '#fca5a5', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ef4444', display: 'inline-block' }}></span>
-              Live Red-Flag Emergency Escalations ({alerts.length})
-            </h4>
+          {/* Filter Tabs */}
+          <div style={{ display: 'flex', gap: '8px', marginBottom: '20px', borderBottom: '1px solid #334155', paddingBottom: '12px' }}>
+            <button
+              onClick={() => setFilterStatus('all')}
+              style={{
+                padding: '6px 12px', borderRadius: '6px', border: 'none', fontSize: '12px', fontWeight: 600, cursor: 'pointer',
+                background: filterStatus === 'all' ? '#38bdf8' : '#1e293b', color: filterStatus === 'all' ? '#0f172a' : '#cbd5e1'
+              }}
+            >
+              All Alerts ({alerts.length})
+            </button>
+            <button
+              onClick={() => setFilterStatus('pending')}
+              style={{
+                padding: '6px 12px', borderRadius: '6px', border: 'none', fontSize: '12px', fontWeight: 600, cursor: 'pointer',
+                background: filterStatus === 'pending' ? '#ef4444' : '#1e293b', color: filterStatus === 'pending' ? '#ffffff' : '#cbd5e1'
+              }}
+            >
+              Pending Clinician Intervene ({alerts.filter((a: any) => a.status !== 'CLINICIAN_TAKEOVER_ACTIVE').length})
+            </button>
+            <button
+              onClick={() => setFilterStatus('taken_over')}
+              style={{
+                padding: '6px 12px', borderRadius: '6px', border: 'none', fontSize: '12px', fontWeight: 600, cursor: 'pointer',
+                background: filterStatus === 'taken_over' ? '#10b981' : '#1e293b', color: filterStatus === 'taken_over' ? '#0f172a' : '#cbd5e1'
+              }}
+            >
+              Clinician Takeover Active ({alerts.filter((a: any) => a.status === 'CLINICIAN_TAKEOVER_ACTIVE').length})
+            </button>
+          </div>
 
-            {alerts.length === 0 ? (
-              <div style={{ padding: '24px', background: '#1e293b', borderRadius: '10px', textAlign: 'center', color: '#94a3b8', fontSize: '13px' }}>
-                Zero active emergency red-flag escalations detected. System operating normally.
+          {/* Active Red-Flag Alerts Cards Stream */}
+          <div style={{ marginBottom: '32px' }}>
+
+            {filteredAlerts.length === 0 ? (
+              <div style={{ padding: '32px', background: '#1e293b', borderRadius: '10px', textAlign: 'center', color: '#94a3b8', fontSize: '13px' }}>
+                Zero active emergency alerts matching filter. Speak a red-flag query like "सीने में दर्द" to trigger a live emergency alert!
               </div>
             ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                {alerts.map((al, idx) => {
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                {filteredAlerts.map((al, idx) => {
                   const alertObj = al as any;
                   const isTakenOver = alertObj.status === 'CLINICIAN_TAKEOVER_ACTIVE';
+                  const profile = alertObj.patient_profile || {
+                    name: 'Ramesh Kumar (Rural Patient)',
+                    age: 58,
+                    gender: 'Male',
+                    location: 'Nelamangala Sub-District, Bengaluru Rural',
+                    ncd_conditions: ['Hypertension (BP 160/100)', 'Type 2 Diabetes'],
+                    assigned_asha: 'ASHA Worker Sunita (Ph: +91-9845012345)',
+                    nearest_phc: 'Nelamangala 24x7 PHC (2.4 km)'
+                  };
+
+                  const currentNote = takeoverNotesMap[alertObj.session_id] || alertObj.takeover_note || 'Patient advised to lie flat immediately. 108 Ambulance dispatched. ASHA Worker Sunita notified.';
 
                   return (
                     <div
                       key={idx}
                       style={{
-                        background: isTakenOver ? '#064e3b' : '#450a0a',
+                        background: isTakenOver ? '#022c22' : '#450a0a',
                         border: isTakenOver ? '1px solid #10b981' : '2px solid #ef4444',
-                        borderRadius: '12px', padding: '20px'
+                        borderRadius: '14px', padding: '24px', boxShadow: isTakenOver ? '0 0 15px rgba(16,185,129,0.2)' : '0 0 20px rgba(239,68,68,0.25)'
                       }}
                     >
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
-                        <div>
+
+                      {/* Card Top Banner */}
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                           <span style={{
                             padding: '4px 10px', borderRadius: '6px', fontSize: '11px', fontWeight: 800, textTransform: 'uppercase',
                             background: isTakenOver ? '#10b981' : '#ef4444', color: '#ffffff'
                           }}>
                             {isTakenOver ? '🩺 CLINICIAN TAKEOVER ACTIVE' : '🚨 HIGH EMERGENCY RED-FLAG'}
                           </span>
-                          <span style={{ fontSize: '12px', color: '#cbd5e1', marginLeft: '10px' }}>
-                            Session: <strong>{alertObj.session_id}</strong> • {alertObj.timestamp}
+                          <span style={{ fontSize: '12px', color: '#cbd5e1' }}>
+                            Ticket ID: <strong style={{ color: '#38bdf8' }}>{alertObj.triage_ticket_id || `TKT-2026-${idx}`}</strong>
                           </span>
                         </div>
-                        <span style={{ fontSize: '11px', color: '#94a3b8', background: '#1e293b', padding: '2px 8px', borderRadius: '4px' }}>
-                          ID: {alertObj.alert_id || `alt_${idx}`}
-                        </span>
+                        <div style={{ fontSize: '12px', color: '#94a3b8' }}>
+                          Session: <strong>{alertObj.session_id}</strong> • {alertObj.timestamp}
+                        </div>
                       </div>
 
-                      <div style={{ fontSize: '14px', color: '#f8fafc', fontWeight: 700, marginBottom: '6px' }}>
-                        Escalation Reason: <span style={{ color: '#fca5a5' }}>{alertObj.reason}</span>
+                      {/* Patient Demographic & Clinical Context */}
+                      <div style={{ background: 'rgba(0,0,0,0.3)', padding: '12px 16px', borderRadius: '8px', marginBottom: '16px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '10px', fontSize: '12px' }}>
+                        <div>👤 Patient: <strong style={{ color: '#f8fafc' }}>{profile.name} ({profile.age}y {profile.gender})</strong></div>
+                        <div>📍 Location: <strong style={{ color: '#f8fafc' }}>{profile.location}</strong></div>
+                        <div>🩺 Conditions: <strong style={{ color: '#fca5a5' }}>{Array.isArray(profile.ncd_conditions) ? profile.ncd_conditions.join(', ') : profile.ncd_conditions}</strong></div>
+                        <div>👩‍⚕️ Assigned ASHA: <strong style={{ color: '#6ee7b7' }}>{profile.assigned_asha}</strong></div>
                       </div>
 
-                      <div style={{ fontSize: '13px', color: '#e2e8f0', background: 'rgba(0,0,0,0.3)', padding: '10px 14px', borderRadius: '6px', marginBottom: '16px' }}>
-                        🗣️ Patient Voice Utterance: <span style={{ fontStyle: 'italic', color: '#fef08a' }}>"{alertObj.patient_utterance}"</span>
-                      </div>
-
-                      {/* Human-in-the-Loop Takeover Action Box */}
-                      <div style={{ background: '#1e293b', padding: '16px', borderRadius: '8px', border: '1px solid #334155' }}>
-                        <div style={{ fontSize: '12px', fontWeight: 700, color: '#38bdf8', marginBottom: '10px', textTransform: 'uppercase' }}>
-                          ⚡ Human-in-the-Loop Takeover & Call Overtake Directives
+                      {/* Escalation Trigger & Voice Playback */}
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(239,68,68,0.15)', padding: '12px 16px', borderRadius: '8px', marginBottom: '16px', border: '1px solid rgba(239,68,68,0.3)' }}>
+                        <div>
+                          <div style={{ fontSize: '11px', color: '#fca5a5', textTransform: 'uppercase' }}>Red-Flag Trigger Reason</div>
+                          <div style={{ fontSize: '14px', fontWeight: 800, color: '#ffffff' }}>{alertObj.reason}</div>
+                          <div style={{ fontSize: '13px', color: '#fef08a', marginTop: '2px', fontStyle: 'italic' }}>
+                            🗣️ Patient Voice Utterance: "{alertObj.patient_utterance}"
+                          </div>
                         </div>
 
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '12px', marginBottom: '12px' }}>
-                          <div>
-                            <label style={{ fontSize: '11px', color: '#94a3b8', display: 'block', marginBottom: '4px' }}>Clinician Name / Title</label>
-                            <input
-                              type="text"
-                              value={takeoverClinician}
-                              onChange={(e) => setTakeoverClinician(e.target.value)}
-                              style={{ width: '100%', padding: '8px', borderRadius: '6px', background: '#0f172a', border: '1px solid #475569', color: '#f8fafc', fontSize: '12px' }}
-                            />
+                        <button
+                          onClick={() => simulatePlayAudio(alertObj.alert_id)}
+                          style={{
+                            padding: '8px 12px', background: playingAudioId === alertObj.alert_id ? '#10b981' : '#1e293b',
+                            border: '1px solid #475569', color: '#ffffff', borderRadius: '6px', cursor: 'pointer', fontSize: '12px',
+                            display: 'flex', alignItems: 'center', gap: '6px'
+                          }}
+                        >
+                          🔊 {playingAudioId === alertObj.alert_id ? 'Playing Waveform...' : 'Play Utterance Audio'}
+                        </button>
+                      </div>
+
+                      {/* Interactive Human-in-the-Loop Takeover Panel */}
+                      <div style={{ background: '#1e293b', padding: '18px', borderRadius: '10px', border: '1px solid #334155' }}>
+                        <div style={{ fontSize: '12px', fontWeight: 700, color: '#38bdf8', marginBottom: '12px', textTransform: 'uppercase', display: 'flex', justifyContent: 'space-between' }}>
+                          <span>⚡ Live Human-in-the-Loop Call Overtake & Directive Panel</span>
+                          {isTakenOver && <span style={{ color: '#34d399' }}>Active Clinician: {alertObj.taken_over_by}</span>}
+                        </div>
+
+                        {/* Pre-set Quick Directive Chips */}
+                        <div style={{ marginBottom: '14px' }}>
+                          <div style={{ fontSize: '11px', color: '#94a3b8', marginBottom: '6px' }}>One-Touch Emergency Directives (Click to Auto-Fill):</div>
+                          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                            <button
+                              onClick={() => {
+                                const directive = '🚨 Dispatch 108 Emergency Ambulance + Instruct patient to lie flat and remain calm.';
+                                setNoteForSession(alertObj.session_id, directive);
+                                handleTakeoverCall(alertObj.session_id, directive);
+                              }}
+                              style={{ padding: '4px 10px', background: '#7f1d1d', border: '1px solid #ef4444', color: '#fca5a5', borderRadius: '4px', fontSize: '11px', cursor: 'pointer', fontWeight: 600 }}
+                            >
+                              🚨 Dispatch 108 Ambulance + Lie Flat
+                            </button>
+
+                            <button
+                              onClick={() => {
+                                const directive = '💊 ASHA Worker Sunita dispatched to location with Sublingual Nitroglycerin / BP Monitor.';
+                                setNoteForSession(alertObj.session_id, directive);
+                                handleTakeoverCall(alertObj.session_id, directive);
+                              }}
+                              style={{ padding: '4px 10px', background: '#064e3b', border: '1px solid #10b981', color: '#6ee7b7', borderRadius: '4px', fontSize: '11px', cursor: 'pointer', fontWeight: 600 }}
+                            >
+                              💊 Dispatch ASHA Worker with Medication
+                            </button>
+
+                            <button
+                              onClick={() => {
+                                const directive = '🏥 Emergency Referral Ticket created for Doddaballapura General Hospital ER.';
+                                setNoteForSession(alertObj.session_id, directive);
+                                handleTakeoverCall(alertObj.session_id, directive);
+                              }}
+                              style={{ padding: '4px 10px', background: '#1e3a8a', border: '1px solid #3b82f6', color: '#93c5fd', borderRadius: '4px', fontSize: '11px', cursor: 'pointer', fontWeight: 600 }}
+                            >
+                              🏥 Create General Hospital ER Referral
+                            </button>
+
+                            <button
+                              onClick={() => {
+                                const directive = '📞 Medical Officer initiating direct audio teleconsultation call with patient.';
+                                setNoteForSession(alertObj.session_id, directive);
+                                handleTakeoverCall(alertObj.session_id, directive);
+                              }}
+                              style={{ padding: '4px 10px', background: '#581c87', border: '1px solid #a855f7', color: '#d8b4fe', borderRadius: '4px', fontSize: '11px', cursor: 'pointer', fontWeight: 600 }}
+                            >
+                              📞 Initiate Direct Teleconsultation
+                            </button>
                           </div>
-                          <div>
-                            <label style={{ fontSize: '11px', color: '#94a3b8', display: 'block', marginBottom: '4px' }}>Direct Clinical Instruction / Takeover Note</label>
-                            <input
-                              type="text"
-                              value={takeoverNote}
-                              onChange={(e) => setTakeoverNote(e.target.value)}
-                              style={{ width: '100%', padding: '8px', borderRadius: '6px', background: '#0f172a', border: '1px solid #475569', color: '#f8fafc', fontSize: '12px' }}
-                            />
-                          </div>
+                        </div>
+
+                        {/* Custom Directive Input Box */}
+                        <div style={{ marginBottom: '14px' }}>
+                          <label style={{ fontSize: '11px', color: '#94a3b8', display: 'block', marginBottom: '4px' }}>Custom Clinician Advice / Takeover Directive Note:</label>
+                          <input
+                            type="text"
+                            value={currentNote}
+                            onChange={(e) => setNoteForSession(alertObj.session_id, e.target.value)}
+                            style={{ width: '100%', padding: '10px', borderRadius: '6px', background: '#0f172a', border: '1px solid #475569', color: '#f8fafc', fontSize: '12px' }}
+                          />
                         </div>
 
                         <button
                           onClick={() => handleTakeoverCall(alertObj.session_id)}
                           style={{
-                            padding: '10px 18px', background: isTakenOver ? '#059669' : '#dc2626', color: '#ffffff',
-                            border: 'none', borderRadius: '6px', fontWeight: 700, fontSize: '12px', cursor: 'pointer',
-                            display: 'inline-flex', alignItems: 'center', gap: '8px'
+                            padding: '10px 20px', background: isTakenOver ? '#059669' : '#dc2626', color: '#ffffff',
+                            border: 'none', borderRadius: '6px', fontWeight: 800, fontSize: '13px', cursor: 'pointer',
+                            display: 'inline-flex', alignItems: 'center', gap: '8px', width: '100%', justifyContent: 'center'
                           }}
                         >
-                          ⚡ {isTakenOver ? 'Update Clinician Takeover Note' : 'Overtake Call / Intervene Now'}
+                          ⚡ {isTakenOver ? 'Update Active Clinician Directive' : 'Overtake Call & Intervene Now'}
                         </button>
                       </div>
 
@@ -596,10 +749,21 @@ export default function VDAMiniApp() {
           {/* FHIR R4 EMR Handoff Inspector */}
           {fhirPayload && (
             <div style={{ background: '#1e293b', border: '1px solid #334155', borderRadius: '12px', padding: '20px' }}>
-              <div style={{ fontSize: '13px', color: '#38bdf8', fontWeight: 700, marginBottom: '10px', textTransform: 'uppercase' }}>
-                🏥 Hospital HMS / EMR Clinical Handoff (FHIR R4 Bundle)
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                <div style={{ fontSize: '13px', color: '#38bdf8', fontWeight: 700, textTransform: 'uppercase' }}>
+                  🏥 Hospital HMS / EMR Clinical Handoff (FHIR R4 Bundle)
+                </div>
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(JSON.stringify(fhirPayload, null, 2));
+                    alert('FHIR R4 JSON Payload copied to clipboard!');
+                  }}
+                  style={{ padding: '4px 10px', background: '#0f172a', border: '1px solid #475569', color: '#38bdf8', borderRadius: '4px', fontSize: '11px', cursor: 'pointer' }}
+                >
+                  📋 Copy FHIR R4 JSON
+                </button>
               </div>
-              <pre style={{ fontSize: '11px', color: '#e2e8f0', background: '#090a0f', padding: '14px', borderRadius: '8px', overflowX: 'auto', maxHeight: '200px' }}>
+              <pre style={{ fontSize: '11px', color: '#e2e8f0', background: '#090a0f', padding: '14px', borderRadius: '8px', overflowX: 'auto', maxHeight: '220px' }}>
                 {JSON.stringify(fhirPayload, null, 2)}
               </pre>
             </div>

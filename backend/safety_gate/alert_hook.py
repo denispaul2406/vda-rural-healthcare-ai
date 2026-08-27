@@ -14,20 +14,33 @@ def notify_clinician(session_id: str, reason: str, utterance: str) -> Dict[str, 
     Triggers immediate emergency alert logging when the safety gate fires.
     In production, this transmits an urgent push notification to the ASHA / Medical Officer dashboard.
     """
+    alert_id = f"alt_{int(time.time()*1000)}"
+    ticket_id = f"TKT-2026-{int(time.time()) % 10000}"
+    
     alert_record = {
-        "alert_id": f"alt_{int(time.time()*1000)}",
+        "alert_id": alert_id,
+        "triage_ticket_id": ticket_id,
         "timestamp": time.strftime("%Y-%m-%d %H:%M:%S IST"),
         "session_id": session_id,
         "reason": reason,
         "patient_utterance": utterance,
         "status": "DISPATCHED_TO_CLINICIAN",
         "priority": "HIGH_EMERGENCY",
+        "patient_profile": {
+            "name": "Ramesh Kumar (Rural Patient)",
+            "age": 58,
+            "gender": "Male",
+            "location": "Nelamangala Sub-District, Bengaluru Rural",
+            "ncd_conditions": ["Hypertension (BP 160/100)", "Type 2 Diabetes"],
+            "assigned_asha": "ASHA Worker Sunita (Ph: +91-9845012345)",
+            "nearest_phc": "Nelamangala 24x7 PHC (2.4 km)"
+        },
         "taken_over_by": None,
         "takeover_note": None,
         "takeover_timestamp": None
     }
     ALERT_HISTORY.append(alert_record)
-    logger.critical(f"🚨 [CLINICIAN ALERT DISPATCHED] Session: {session_id} | Reason: {reason} | Utterance: '{utterance}'")
+    logger.critical(f"🚨 [CLINICIAN ALERT DISPATCHED] Session: {session_id} | Ticket: {ticket_id} | Reason: {reason} | Utterance: '{utterance}'")
     return alert_record
 
 def takeover_alert(session_id: str, clinician_name: str = "Dr. Sharma (MO)", clinician_note: str = "Taking over call for emergency protocol advice") -> Dict[str, Any]:
