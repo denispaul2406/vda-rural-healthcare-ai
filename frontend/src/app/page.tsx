@@ -106,8 +106,18 @@ export default function VDAMiniApp() {
       setTurnResult(data);
 
       if (data.audio_b64) {
-        const audio = new Audio(`data:audio/wav;base64,${data.audio_b64}`);
-        audio.play().catch(() => console.log('Audio autoplay prevented'));
+        try {
+          const audio = new Audio(`data:audio/wav;base64,${data.audio_b64}`);
+          audio.play().catch(() => {
+            console.log('Autoplay blocked by browser. User can click Listen to Voice button.');
+          });
+        } catch (e) {
+          console.error('Audio init error:', e);
+        }
+      } else if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+        const synthUtterance = new SpeechSynthesisUtterance(data.response_text);
+        synthUtterance.lang = activeLang;
+        window.speechSynthesis.speak(synthUtterance);
       }
 
       fetchAlertsAndFhir();
@@ -164,6 +174,24 @@ export default function VDAMiniApp() {
       alert('Session memory purged. Zero PII retained.');
     } catch (e) {
       console.error('Purge error:', e);
+    }
+  };
+
+  const playCurrentVoiceResponse = () => {
+    if (turnResult?.audio_b64) {
+      const audio = new Audio(`data:audio/wav;base64,${turnResult.audio_b64}`);
+      audio.play().catch(e => {
+        console.error('Audio play error:', e);
+        if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+          const synthUtterance = new SpeechSynthesisUtterance(turnResult.response_text);
+          synthUtterance.lang = activeLang;
+          window.speechSynthesis.speak(synthUtterance);
+        }
+      });
+    } else if (turnResult?.response_text && typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      const synthUtterance = new SpeechSynthesisUtterance(turnResult.response_text);
+      synthUtterance.lang = activeLang;
+      window.speechSynthesis.speak(synthUtterance);
     }
   };
 
@@ -407,8 +435,20 @@ export default function VDAMiniApp() {
                     </div>
                   )}
 
-                  <div style={{ fontSize: '12px', fontWeight: 600, color: '#8C7D72', textTransform: 'uppercase', marginBottom: '8px' }}>
-                    VDA Patient Advice Response
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                    <div style={{ fontSize: '12px', fontWeight: 600, color: '#8C7D72', textTransform: 'uppercase' }}>
+                      VDA Patient Advice Response
+                    </div>
+                    <button
+                      onClick={playCurrentVoiceResponse}
+                      style={{
+                        padding: '6px 12px', background: '#B8456B', color: '#FFFFFF', border: 'none',
+                        borderRadius: '6px', fontSize: '12px', fontWeight: 600, cursor: 'pointer',
+                        display: 'flex', alignItems: 'center', gap: '6px'
+                      }}
+                    >
+                      🔊 Play Voice Response
+                    </button>
                   </div>
 
                   <p style={{
