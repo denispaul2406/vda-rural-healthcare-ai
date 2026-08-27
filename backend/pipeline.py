@@ -7,6 +7,7 @@ from typing import Dict, Any, Optional
 from backend.stt import get_stt_provider
 from backend.intent import IntentClassifier, get_deterministic_fallback, get_out_of_scope_decline, INTENT_UC1, INTENT_OUT_OF_SCOPE
 from backend.safety_gate import SafetyGate
+from backend.safety_gate.alert_hook import is_takeover_active, get_takeover_details
 from backend.rag import UC1Retriever, Answerer
 from backend.tts import get_tts_provider
 from backend.session import session_store
@@ -21,9 +22,10 @@ class VDAPipeline:
     1. STT (Speech-to-Text) & Language Identification
     2. Intent Classification & Confidence Check
     3. Safety Gate (Deterministic Red-Flag Rule Check) -> SHORT-CIRCUITS ON EMERGENCY
-    4. RAG Retrieval (with Intent-Routed Index Isolation) & Grounded LLM Agent
-    5. TTS (Text-to-Speech) Audio Generation
-    6. Ephemeral Session Context Update
+    4. Human-in-the-Loop Takeover Check (Clinician Control Override)
+    5. RAG Retrieval (with Intent-Routed Index Isolation) & Grounded LLM Agent
+    6. TTS (Text-to-Speech) Audio Generation
+    7. Ephemeral Session Context Update
     """
 
     def __init__(self, confidence_threshold: float = 0.75):
@@ -64,6 +66,14 @@ class VDAPipeline:
         else:
             return {"error": "No audio bytes or text input provided."}
 
+        # Check Human-in-the-Loop active takeover status
+        takeover_active = is_takeover_active(session_id)
+        takeover_info = get_takeover_details(session_id) if takeover_active else {}
+
+        if takeover_active:
+            clinician_name = takeover_info.get("clinician_name", "Medical Officer")
+            pipeline_log.append(f"[HUMAN-IN-THE-LOOP] 🩺 CLINICIAN TAKEOVER ACTIVE ({clinician_name}). Human overriding AI flow.")
+
         # -------------------------------------------------------------
         # STAGE 2: Intent Classification
         # -------------------------------------------------------------
@@ -75,7 +85,7 @@ class VDAPipeline:
         # -------------------------------------------------------------
         gate_result = self.safety_gate.check(transcript, session_id=session_id, lang_code=lang_code)
         
-        if gate_result.escalate:
+        if gate_result.escalate and not takeover_active:
             # SAFETY SHORT-CIRCUIT: LLM is NEVER called when safety gate fires!
             pipeline_log.append(f"[STAGE 3] 🚨 SAFETY GATE ESCALATION TRIGGERED: '{gate_result.reason}'. Bypass LLM!")
             
@@ -97,17 +107,18 @@ class VDAPipeline:
                 "audio_b64": audio_b64,
                 "sources": ["SAFETY_RULE_ENGINE"],
                 "latency_ms": elapsed_ms,
-                "pipeline_log": pipeline_log
+                "pipeline_log": pipeline_log,
+                "clinician_takeover": False
             }
             session_store.add_turn(session_id, result)
             return result
 
-        pipeline_log.append("[STAGE 3] Safety Gate Passed (No red-flag emergency detected).")
+        pipeline_log.append("[STAGE 3] Safety Gate Check Completed.")
 
         # -------------------------------------------------------------
         # STAGE 2 (Contd): Low Confidence Fallback & Out-of-Scope Refusal
         # -------------------------------------------------------------
-        if intent == INTENT_OUT_OF_SCOPE:
+        if intent == INTENT_OUT_OF_SCOPE and not takeover_active:
             pipeline_log.append("[STAGE 2] Out-of-Scope question detected. Returning fixed decline.")
             response_text = get_out_of_scope_decline(lang_code)
             audio_response = self.tts_provider.synthesize(response_text, lang_code=lang_code)
@@ -124,10 +135,11 @@ class VDAPipeline:
                 "audio_b64": audio_b64,
                 "sources": ["OUT_OF_SCOPE_DECLINE"],
                 "latency_ms": elapsed_ms,
-                "pipeline_log": pipeline_log
+                "pipeline_log": pipeline_log,
+                "clinician_takeover": False
             }
 
-        if confidence < self.confidence_threshold:
+        if confidence < self.confidence_threshold and not takeover_active:
             pipeline_log.append(f"[STAGE 2] Low Confidence ({confidence:.2f} < {self.confidence_threshold}). Returning deterministic fallback.")
             response_text = get_deterministic_fallback(lang_code)
             audio_response = self.tts_provider.synthesize(response_text, lang_code=lang_code)
@@ -144,7 +156,8 @@ class VDAPipeline:
                 "audio_b64": audio_b64,
                 "sources": ["LOW_CONFIDENCE_FALLBACK"],
                 "latency_ms": elapsed_ms,
-                "pipeline_log": pipeline_log
+                "pipeline_log": pipeline_log,
+                "clinician_takeover": False
             }
 
         # -------------------------------------------------------------
@@ -157,6 +170,13 @@ class VDAPipeline:
             pipeline_log.append("[STAGE 4] RAG similarity score below threshold. Returning grounded refusal.")
 
         response_text, source_ids = self.answerer.generate_answer(transcript, retrieved_chunks, lang_code=lang_code)
+
+        if takeover_active:
+            clinician_name = takeover_info.get("clinician_name", "Medical Officer")
+            clinician_note = takeover_info.get("clinician_note", "")
+            response_text = f"🩺 [Direct Clinician Call Takeover by {clinician_name}]: {clinician_note}. {response_text}"
+            source_ids.append(f"HUMAN_CLINICIAN_TAKEOVER ({clinician_name})")
+
         pipeline_log.append(f"[STAGE 4] Generated RAG Response. Sources: {source_ids}")
 
         # -------------------------------------------------------------
@@ -180,11 +200,12 @@ class VDAPipeline:
             "audio_b64": audio_b64,
             "sources": source_ids,
             "latency_ms": elapsed_ms,
-            "pipeline_log": pipeline_log
+            "pipeline_log": pipeline_log,
+            "clinician_takeover": takeover_active
         }
 
         # -------------------------------------------------------------
         # STAGE 6: Update Ephemeral Session Store
-        # -------------------------------------------------------------
+        # --------------------------------00-----------------------------
         session_store.add_turn(session_id, turn_result)
         return turn_result

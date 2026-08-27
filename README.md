@@ -57,19 +57,23 @@ To prevent cross-domain semantic collisions across 16 guideline PDFs, VDA enforc
 
 ---
 
-## 🎨 Dual View Interface Design
+## 🎨 Triple View Interface Architecture (Human-in-the-Loop)
 
-Built for rural NCD patients on mid-range Android devices under direct outdoor sunlight:
+Built for rural NCD patients on mid-range Android devices under direct outdoor sunlight, alongside Medical Officers and Evaluators:
 
 1. **Patient View (Default)**:
    - **Background (`#FAF5EC` Paper)**: High contrast light surface for outdoor legibility under direct sunlight.
    - **Typography (`Hind` & `Plus Jakarta Sans`)**: Purpose-built Devanagari Hindi font support.
    - **Primary Accent (`#B8456B` ASHA Rose)**: Inspired by the iconic sari color of India's ASHA community health workers.
-   - **Dominant Focal Element**: Large circular mic button.
+   - **Dominant Focal Element**: Large circular mic button with pulse animation.
    - **Emergency State**: High-contrast red alert box with a prominent **Call 108 / 102 Ambulance** action button.
-   - **Iconography**: Clean SVG outline icons only (no emojis).
 
-2. **Inspector Mode (Developer Panel Toggle)**:
+2. **Clinician Dashboard (Human-in-the-Loop Emergency Control)**:
+   - **Live Red-Flag Alert Stream**: Highlights high-priority emergency escalations (cardiac, stroke, respiratory, syncope) in pulsing red cards (`#ef4444` border).
+   - **Call Overtake / Intervene Directive (`POST /api/alerts/takeover`)**: Enables Medical Officers to interrupt AI automation and issue direct clinical directives or override advice.
+   - **FHIR R4 EMR Handoff Inspector**: Displays structured HL7/FHIR R4 Clinical Impression & Observation bundles for emergency hospital handoffs.
+
+3. **Inspector Mode (Developer Telemetry Panel)**:
    - Evaluator-facing panel detailing turn latency, STT transcript + language ID, intent confidence, safety gate results, citable RAG chunk sources, clinician alert logs, **Simulated FHIR EMR Payload**, and active provider configuration (`Sarvam AI` / `Google` / `Bhashini`).
 
 ---
